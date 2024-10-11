@@ -1,0 +1,152 @@
+/* DASHBOARD STYLE */
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: "Rubik";
+    height: 100vh;
+}
+
+#dashboardMainContainer{
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+}
+
+li{
+    list-style:none;
+}
+
+div.dashboard_sidebar{
+    width: 20%;
+    /* background: #93040c; */
+    background: linear-gradient(to right, #93040c, #660000);
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    border-top-right-radius: 30px;  
+    border-bottom-right-radius: 30px;
+}
+
+div.dashboard_content_container{
+    width: 80%;
+    background-color: rgba(249, 250, 251, 0.6)
+}
+
+h3.dashboard_logo{
+    color: #faf9f7;
+    font-size: 80px;
+    text-align:center;
+    line-height:0;
+}
+
+div.dashboard_sidebar_user{
+    text-align: center;
+    position: relative;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #fff;
+}
+
+div.dashboard_sidebar_user img{
+    width: 20px;
+    display: inline-block;
+    
+    margin-right: 5px;
+    /* vertical-align: middle; */
+}
+
+div.dashboard_sidebar_user span{
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #fff;
+    display: inline-block;
+}
+
+ul.dashboard_menu_lists{
+    padding-left: 0px;
+    margin-top: 20px;
+}
+
+ul.dashboard_menu_lists li {
+    position: relative; /* Untuk penempatan pseudo-elemen */
+    padding: 10px 15px;
+    font-size: 18px;
+    border-top-right-radius: 10px;  
+    border-bottom-right-radius: 10px;
+}
+ul.dashboard_menu_lists li:hover{
+    background-color: #660000;
+    transition: background-color 0.4s ease-in-out;
+}
+
+ul.dashboard_menu_lists li.menuActive{
+    background-color: #660000;
+
+}
+ul.dashboard_menu_lists li a{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    font-size: 15px;
+    margin-left: 5px;
+}
+
+ul.dashboard_menu_lists li a i{
+   font-size: 17px;
+   margin-right:20px;
+}
+
+div.dashboard_topNav{
+    background: #fff;
+    padding: 18px 15px 10px 10px;
+}
+
+div.dashboard_topNav a {
+    display: inline-block;
+    padding: 5px;
+    color: #000; 
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    position: relative; 
+    overflow: hidden; 
+    transition: color 0.5s ease-in-out; 
+}
+
+div.dashboard_topNav a::before {
+    content: ""; 
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%; 
+    height: 3px; 
+    background-color: #000; 
+    transform: translateX(-100%); 
+    transition: transform 0.5s ease-in-out; 
+}
+
+div.dashboard_topNav a:hover {
+    color: #660000; 
+}
+
+div.dashboard_topNav a:hover::before {
+    transform: translateX(0); 
+}
+
+a#logoutBtn{
+    float: right;
+}
+
+div.dashboard_content{
+    padding: 20px 10px 10px 10px;
+    background-color: #ebebeb; 
+    /* border-bottom: 4px solid #000; */
+}
+
+div.dashboard_content_main{
+    background-color: #fff;
+    min-height: auto; 
+    height: auto;
+
+}
