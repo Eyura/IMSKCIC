@@ -1,6 +1,8 @@
-<?php
+<?php 
 
 session_start();
+// if(!isset($_SESSION['user'])) header('location: dashboard.php'); 
+
 
 $error_message ='';
 if($_POST){

@@ -16,7 +16,7 @@ $user = $_SESSION['user'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
+    <!-- <link rel="stylesheet" href="css/font-awesome/css/font-awesome.min.css"> -->
 
  </head>
  <body>
@@ -28,9 +28,28 @@ $user = $_SESSION['user'];
             <?php include ('partials/app-topnav.php') ?>
 
             <div class="dashboard_content">
-          
                 <div class="dashboard_content_main">
-
+                    <form action="" class="appForm">
+                        <div>
+                            <label for="first_name">First Name</label>
+                            <input type="text" id="first_name" name="first_name" class="appFormInput"/>
+                        </div>
+                        <div>
+                            <label for="last_name">Last Name</label>
+                            <input type="text" id="last_name" name="last_name" class="appFormInput"/>
+                        </div>
+                        <div>
+                            <label for="email">Email</label>
+                            <input type="text" id="email" name="email" class="appFormInput"/>
+                        </div>
+                        <div>
+                            <label for="password">Password</label>
+                            <input type="text" id="password" name="password" class="appFormInput"/>
+                        </div>
+                        <div class="button-container">
+                            <button type="submit"><i class="fa fa-plus"></i> Add User</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
