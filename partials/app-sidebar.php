@@ -7,7 +7,9 @@
         </div>
         <div class="dashboard_sidebar_menus">
             <ul class="dashboard_menu_lists">
-                <li class="menuActive" >
+
+                <!-- class="menuActive"  -->
+                <li>
                     <a href="./dashboard.php" > <i class="fa fa-dashboard"></i> <span class="menuText"> Dashboard </span> </a>
                 </li>
                 <li>

@@ -49,7 +49,7 @@ $user = $_SESSION['user'];
             dashboard_sidebar.style.width = '10%';
             dashboard_content_container.style.width = '90%';
             dashboard_logo.style.fontSize= '50px';
-            userImage.style.width = '45px';
+            userImage.style.width = '20px';
 
             menuIcons = document.getElementsByClassName('menuText');
             for(var i=0; i < menuIcons.length;i++){
@@ -62,7 +62,7 @@ $user = $_SESSION['user'];
                 dashboard_sidebar.style.width = '20%';
                 dashboard_content_container.style.width = '80%';
                 dashboard_logo.style.fontSize= '80px';
-                userImage.style.width = '60px';
+                userImage.style.width = '20px';
 
                 menuIcons = document.getElementsByClassName('menuText');
                 for(var i=0; i < menuIcons.length;i++){
