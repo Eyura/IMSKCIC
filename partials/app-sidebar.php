@@ -16,7 +16,7 @@
                     <a href="./users-add.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> Add User </span>  </a>
                 </li>
                 <li>
-                    <a href="./add-asset.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> add asset </span>  </a>
+                    <a href="./add-asset.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> Add asset </span>  </a>
                 </li>
                 <li>
                     <a href="./Report.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> Report </span>  </a>

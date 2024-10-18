@@ -158,7 +158,7 @@ div.dashboard_content_main{
     background-color: #f0f0f0;
     padding: 20px;
     border-radius: 20px;
-    width: 500px;
+    width: 90% ;
     margin: 0 auto;
   }
   
@@ -231,3 +231,71 @@ legend {
     border: 1px solid #f5c6cb;
 }
 
+/* user add page */
+div.row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+div.column{
+    width: 100%;
+}
+div.column-5{
+    width: 41.67%;
+}
+div.column-7{
+    width: 57.33%;
+    padding-left: 1%;
+}
+
+h1.section_header{
+    font-size: 20px;
+    color: #660000;
+    border-bottom: 1px solid #660000;
+    border-left: 4px solid #660000;
+    padding-bottom: 11px;
+    padding-left: 20px;
+}
+
+table, th, td{
+    border: 1px solid #cacaca;
+    border-collapse: collapse;
+}
+
+table{
+    width: 100%;
+}
+
+table th{
+    font-size: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    background: #f0f0f0;
+}
+
+table td{
+    font-size: 13px;
+    text-align: center;
+    padding: 5px;
+}
+
+p.userCount{
+    text-align: right;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #660000;
+}
+.delete-button {
+    background-color: red;
+    color: white;
+    border-radius: 20px;
+    padding: 5px 10px;
+    cursor: pointer;
+    border: 1px;
+}
+.delete-button:hover {
+    background-color: darkred;
+}
