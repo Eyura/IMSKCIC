@@ -29,8 +29,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['msg_type'] = "error";
         } else {
             // Anda mungkin perlu mengenkripsi password di sini
-            $sql = "INSERT INTO users (first_name, last_name, email, password,         created_at, updated_at) 
-                    VALUES ('$first_name', '$last_name', '$email', '$password', NOW(), NOW())";
+            $sql = "INSERT INTO users (first_name, last_name, email, password, created_at) 
+                    VALUES ('$first_name', '$last_name', '$email', '$password', NOW())";
             
             if ($conn->query($sql) === TRUE) {
                 $_SESSION['message'] = "User added successfully!";

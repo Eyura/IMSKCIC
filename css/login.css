@@ -220,9 +220,9 @@ legend {
 }
 
 .responseMessage.success {
-    background-color: #d4edda;
-    color: #155724; /* Warna untuk pesan sukses */
-    border: 1px solid #c3e6cb;
+    background-color: #f8d7da;
+    color: #721c24; /* Warna teks merah untuk pesan error */
+    border: 1px solid #f5c6cb;
 }
 
 .responseMessage.error {
@@ -295,7 +295,10 @@ p.userCount{
     padding: 5px 10px;
     cursor: pointer;
     border: 1px;
+
 }
 .delete-button:hover {
     background-color: darkred;
 }
+
+

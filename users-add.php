@@ -89,7 +89,7 @@ $users = include('show-users.php');
                                         <th>Last Name</th>
                                         <th>Email</th>
                                         <th>Created At</th>
-                                        <th>Updated At</th>
+                                        <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -100,12 +100,14 @@ $users = include('show-users.php');
                                             <td><?= $user['last_name'] ?></td>
                                             <td><?= $user['email'] ?></td>
                                             <td><?= date('M d, Y', strtotime($user['created_at'])) ?></td>
-                                            <td><?= date('M d, Y', strtotime($user['updated_at'])) ?></td>
                                             <td>
-                                                <form action="delete-user.php"          method="POST" onsubmit="return confirm('ANDA YAKIN SU!!!?');">
+                    
+                                                <form id="deleteForm" action="delete-user.php" method="POST" onsubmit="return confirm('Are you sure to delete' + ' <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?> ?');">
+
                                                     <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                                    <button type="submit" class="delete-button">Delete</button>
+                                                    <button type="submit" class="delete-button">  <i class= "fa fa-trash"> </i> Delete</button>
                                                 </form>
+
                                             </td>
                                         </tr>
                                     <?php } ?>
@@ -120,46 +122,7 @@ $users = include('show-users.php');
         </div>
     </div>
 
-    <script>
-        var sideBarIsOpen = true;
-
-
-        toggleBtn.addEventListener( 'click', (event) => {
-            event.preventDefault();
-
-
-            if(sideBarIsOpen){
-            dashboard_sidebar.style.transition = '0.9s all';
-            dashboard_sidebar.style.width = '10%';
-            dashboard_content_container.style.width = '90%';
-            dashboard_logo.style.fontSize= '50px';
-            userImage.style.width = '20px';
-            
-            menuIcons = document.getElementsByClassName('menuText');
-            for(var i=0; i < menuIcons.length;i++){
-                menuIcons[i].style.display = 'none';
-            }
-
-            document.getElementsByClassName('dashboard_menu_lists') [0].style.textAlign = 'center';
-            sideBarIsOpen = false;
-            }   else{
-                dashboard_sidebar.style.width = '20%';
-                dashboard_content_container.style.width = '80%';
-                dashboard_logo.style.fontSize= '80px';
-                userImage.style.width = '20px';
-                
-
-
-                menuIcons = document.getElementsByClassName('menuText');
-                for(var i=0; i < menuIcons.length;i++){
-                menuIcons[i].style.display = 'inline';
-                }
-
-                document.getElementsByClassName('dashboard_menu_lists') [0].style.textAlign = 'left';
-                sideBarIsOpen = true;
-                }   
-                
-        } );
-    </script>
+    <script src="js/script.js"> </script>
+    
  </body>
  </html>
