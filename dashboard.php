@@ -75,5 +75,6 @@ $user = $_SESSION['user'];
                 
         } );
     </script>
+    <script src="js/script.js?v=?= time(); ?>"> </script>
  </body>
  </html>

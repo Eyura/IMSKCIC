@@ -12,7 +12,7 @@ $users = include('show-users.php');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> Dashboard - Inventory Management</title>
-	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="stylesheet" type="text/css" href="css/login.css?v=?= time(); ?>">
     <script src="https://use.fontawesome.com/0c7a3095b5.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -122,7 +122,8 @@ $users = include('show-users.php');
         </div>
     </div>
 
-    <script src="js/script.js"> </script>
+    <script src="js/script.js?v=?= time(); ?>"> </script>
+    <script src="js/jquery.min.js></script>
     
  </body>
  </html>

@@ -10,6 +10,7 @@ body {
     align-items: center;
     height: 100vh;
     background: linear-gradient(90deg, rgba(198,133,77,1) 23%, rgba(196,177,164,1) 80%, rgba(143,46,52,1) 100%);
+    
     /* background-image: url('bg1.jpeg'); */
     font-family: 'Rubik';
     background-size: cover;

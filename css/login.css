@@ -18,6 +18,8 @@ li{
     list-style:none;
 }
 
+
+/* SIDE BAR */
 div.dashboard_sidebar{
     width: 20%;
     /* background: #93040c; */
@@ -69,35 +71,79 @@ ul.dashboard_menu_lists{
     margin-top: 20px;
 }
 
-ul.dashboard_menu_lists li {
-    position: relative; /* Untuk penempatan pseudo-elemen */
-    padding: 10px 15px;
+ul.dashboard_menu_lists li.liMainMenu {
+    position: relative; 
+    padding-top: 15px;
+    padding-left: 0px;
     font-size: 18px;
     border-top-right-radius: 10px;  
     border-bottom-right-radius: 10px;
 }
-ul.dashboard_menu_lists li:hover{
+ul.dashboard_menu_lists li.liMainMenu:hover{
     background-color: #660000;
     transition: background-color 0.4s ease-in-out;
+}
+
+ul.dashboard_menu_lists li.liMainMenu a{
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    font-size: 15px;
+    margin-left: 20px;
+    padding: 0px 15px;
+    padding-bottom: 15px;
+}
+
+ul.dashboard_menu_lists li.liMainMenu a i{
+   font-size: 17px;
+   margin-right:20px;
 }
 
 ul.dashboard_menu_lists li.menuActive{
     background-color: #660000;
 
 }
-ul.dashboard_menu_lists li a{
-    text-decoration: none;
-    color: #fff;
-    display: block;
-    font-size: 15px;
-    margin-left: 5px;
+a.subMenuLink {
+    padding-left: 25px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    text-transform: none;
+    font-size: 15px !important;
 }
 
-ul.dashboard_menu_lists li a i{
-   font-size: 17px;
-   margin-right:20px;
+.subMenuContainer{
+    padding-left: 0px;
+}
+a.subMenuLink i {
+    font-size: 16px !important;
+    width: 16px !important;
 }
 
+ul.subMenus {
+    background: #660000;
+    padding-left: 0px !important;
+    display: none; /* sembunyikan submenu secara default */
+    transition: max-height 0.3s ease-out; /* Animate the max-height */
+}
+
+ul.subMenus.show { /* kelas untuk menampilkan submenu */
+    display: block !important;
+    max-height: 200px;
+}
+
+i.iconArrow{
+    float: right;
+}
+
+.subMenuActive{
+    font-weight: bold;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+    background: #660000;
+}
+
+
+/* TOP NAVBAR */
 div.dashboard_topNav{
     background: #fff;
     padding: 18px 15px 10px 10px;

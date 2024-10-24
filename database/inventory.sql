@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 22, 2024 at 11:31 AM
+-- Generation Time: Oct 24, 2024 at 10:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -71,7 +71,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `created_at`) VALUES
-(1, 'akmal', 'anjay', 'akmalpassword', 'akmal@ims.com', '2024-10-22');
+(1, 'akmal', 'anjay', 'akmalpassword', 'akmal@ims.com', '2024-10-22'),
+(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24');
 
 --
 -- Indexes for dumped tables
@@ -112,7 +113,7 @@ ALTER TABLE `assets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
