@@ -137,9 +137,9 @@ i.iconArrow{
 
 .subMenuActive{
     font-weight: bold;
-    border-top: 2px solid white;
-    border-bottom: 2px solid white;
-    background: #660000;
+    /* border-top: 2px solid white;
+    border-bottom: 2px solid white;*/
+    /* background: #5c4a4a; */
 }
 
 

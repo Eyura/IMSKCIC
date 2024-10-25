@@ -13,20 +13,33 @@
                 <a href="./dashboard.php" > <i class="fa fa-dashboard"></i> <span class="menuText"> Dashboard </span> </a>
             </li>
             <li class="liMainMenu">
-                <a href="./Report.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> Report </span>  </a>
+                <a href=" "> <i class="fa fa-dashboard"></i> <span class="menuText"> Report </span>  </a>
             </li>
+
             <li class="liMainMenu">
-                <a href=""> <i class="fa fa-dashboard"></i> <span class="menuText"> Assets Management </span>  </a>
+                <a href="javascript:void(0);" class="showHideSubMenu">
+                    <i class="fa fa-truck showHideSubMenu"></i>
+                    <span class="menuText showHideSubMenu">Asset</span>
+                    <i class="fa fa-angle-left iconArrow showHideSubMenu"></i>
+                </a>
+                <ul class="subMenus">
+                    <li class="subMenuContainer">
+                        <a class="subMenuLink" href="./asset-view.php"><i class="fa fa-circle-o"></i>View Assets</a>
+                    </li>
+                    <li class="subMenuContainer">
+                        <a class="subMenuLink" href="./asset-add.php"><i class="fa fa-circle-o"></i>Add Asset</a>
+                    </li>
+                </ul>
             </li>
             <li class="liMainMenu showHideSubMenu">
-                <a href="javascript:void(0);" class="showHideSubMenu" onclick="toggleSubMenu(this)">
+                <a href="javascript:void(0);" class="showHideSubMenu">
                     <i class="fa fa-user-plus showHideSubMenu"></i>
                     <span class="menuText showHideSubMenu">User Management</span>
                     <i class="fa fa-angle-left iconArrow showHideSubMenu"></i>
                 </a>
                 <ul class="subMenus">
                     <li class="subMenuContainer">
-                        <a class="subMenuLink" href="#"><i class="fa fa-circle-o"></i>View Users</a>
+                        <a class="subMenuLink" href="./view-users.php"><i class="fa fa-circle-o"></i>View Users</a>
                     </li>
                     <li class="subMenuContainer">
                         <a class="subMenuLink" href="./users-add.php"><i class="fa fa-circle-o"></i>Add User</a>
@@ -37,5 +50,6 @@
         </ul>
     </div>
 </div>
+
 
 

@@ -1,8 +1,8 @@
 <?php 
 session_start();
 if(!isset($_SESSION['user'])) header('location: login_pages.php');
-$_SESSION['table'] = 'users';
-$_SESSION['redirect_to'] = 'users-add.php';
+$_SESSION['table'] = 'assets';
+$_SESSION['redirect_to'] = 'asset-add.php';
 $user = $_SESSION['user'];
 $users = include('show-users.php');
 ?>
@@ -10,7 +10,7 @@ $users = include('show-users.php');
  <!DOCTYPE html>
  <html lang="en">
  <head>
-    <title> Add Users - Inventory Management</title>
+    <title> Add Assets - Inventory Management</title>
     <?php include('partials/app-header-scripts.php'); ?>
 
  </head>
@@ -25,31 +25,24 @@ $users = include('show-users.php');
             <div class="dashboard_content">
                 <div class="row">
                     <div class="column column-12">
-                        <h1 class="section_header"> <i class="fa fa-plus"></i> Create User</h1>
+                        <h1 class="section_header"> <i class="fa fa-plus"></i> Add Asset</h1>
                     <div id="userAddFormContainer">
 
                     </div>
                     <div class="dashboard_content_main">
                     <form action="add.php" method="POST" class="appForm">
                         <div>
-                            <label for="first_name">First Name</label>
-                            <input type="text" id="first_name" name="first_name" required class="appFormInput"/>
+                            <label for="asset_name">Asset Name</label>
+                            <input type="text" id="asset_name" name="asset_name" required class="appFormInput"/>
                         </div>
                         <div>
-                            <label for="last_name">Last Name</label>
-                            <input type="text" id="last_name" name="last_name" required class="appFormInput"/>
-                        </div>
-                        <div>
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required class="appFormInput"/>
-                        </div>
-                        <div>
-                            <label for="password">Password</label>
-                            <input type="text" id="password" name="password" required class="appFormInput"/>
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" class="appFormInput"></textarea>
+                            
                         </div>
                         <input type="hidden" name="table" value="users"/>
                         <div class="button-container">
-                            <button type="submit"><i class="fa fa-plus"></i> Add User</button>
+                            <button type="submit"><i class="fa fa-plus"></i> Add Asset</button>
                         </div>
                         </form>
                         <?php

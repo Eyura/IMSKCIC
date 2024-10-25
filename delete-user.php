@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Redirect kembali ke halaman sebelumnya
-    header("Location: users-add.php"); // Ganti dengan halaman yang sesuai
+    header("Location: view-users.php"); // Ganti dengan halaman yang sesuai
     exit();
 }
 ?>

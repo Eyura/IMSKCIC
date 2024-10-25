@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2024 at 10:30 AM
+-- Generation Time: Oct 25, 2024 at 10:16 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,6 +30,8 @@ SET time_zone = "+00:00";
 CREATE TABLE `assets` (
   `id` int(11) NOT NULL,
   `asset_name` varchar(200) NOT NULL,
+  `description` varchar(200) DEFAULT NULL,
+  `img` varchar(100) DEFAULT NULL,
   `asset_type` varchar(15) NOT NULL,
   `created_by` int(11) NOT NULL,
   `created_at` datetime NOT NULL,
@@ -72,7 +74,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `created_at`) VALUES
 (1, 'akmal', 'anjay', 'akmalpassword', 'akmal@ims.com', '2024-10-22'),
-(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24');
+(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24'),
+(3, 'test', 'testing', '$2y$10$OXsW2K2BYjEHVl/fG8W60OPmq5jfDq7.L9J2QKjZs0A', 'test@gmail.com', '2024-10-25');
 
 --
 -- Indexes for dumped tables
@@ -113,7 +116,7 @@ ALTER TABLE `assets`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables
