@@ -30,7 +30,7 @@ $users = include('show-users.php');
 
                     </div>
                     <div class="dashboard_content_main">
-                    <form action="add.php" method="POST" class="appForm">
+                    <form action="add.php" method="POST" class="appForm" enctype="multipart/form-data">
                         <div>
                             <label for="asset_name">Asset Name</label>
                             <input type="text" id="asset_name" name="asset_name" required class="appFormInput"/>
@@ -40,7 +40,19 @@ $users = include('show-users.php');
                             <textarea id="description" name="description" class="appFormInput"></textarea>
                             
                         </div>
-                        <input type="hidden" name="table" value="users"/>
+                        <div>
+                        <label for="asset_type">Asset Type</label>
+                        <select id="asset_type" name="asset_type" required class="appFormInput">
+                            <option value="">Select Asset Type</option>
+                            <option value="fast moving">Fast Moving</option>
+                            <option value="slow moving">Slow Moving</option>
+                        </select>
+                        </div>
+                        <div>
+                            <label for="asset_name">Product Image</label>
+                            <input type="file" id="asset_name" name="img" value="Upload Image" required class="appFormInput"/>
+                        </div>
+                        <input type="hidden" name="table" value="asset"/>
                         <div class="button-container">
                             <button type="submit"><i class="fa fa-plus"></i> Add Asset</button>
                         </div>

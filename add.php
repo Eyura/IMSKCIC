@@ -1,3 +1,4 @@
+@ -0,0 +1,67 @@
 <?php
 
 session_start();
@@ -19,23 +20,40 @@ foreach ($columns as $column) {
     if (in_array($column, ['created_at'])) $value = date('Y-m-d');
     elseif ($column == 'created_by') $value = $_SESSION['user']['id']; // Assuming user ID is stored in the session
     elseif ($column == 'password') $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
+    elseif ($column == 'asset_type') $value = isset($_POST['asset_type']) ? $_POST['asset_type'] : null;
+    elseif ($column == 'img'){
+
+        $target_dir = "uploads/products/";
+        $file_data = $_FILES[$column];
+
+        $file_name = $file_data['name'];
+        $check = getimagesize($file_data['tmp_name']);
+        if ($check) {
+            if(move_uploaded_file($file_data['tmp_name'], $target_dir . $file_name)){
+                $value = $file_name;
+            }
+    } else {
+
+        }
+    }
     else $value = isset($_POST[$column]) ? trim($_POST[$column]) : '';
-    
+
     $db_arr[$column] = $value;
 }
 
-// Required fields validation
-$required_fields = ['first_name', 'last_name', 'email', 'password'];
-foreach ($required_fields as $field) {
-    if (empty($db_arr[$field])) {
-        $_SESSION['message'] = "All fields are required!";
-        $_SESSION['msg_type'] = "error";
-        header('location: users-add.php'); // Redirect to the form page
-        exit();
-    }
-}
 
-// Check if email already exists
+// Required fields validation
+// $required_fields = ['first_name', 'last_name', 'email', 'password'];
+// foreach ($required_fields as $field) {
+//     if (empty($db_arr[$field])) {
+//         $_SESSION['message'] = "All fields are required!";
+//         $_SESSION['msg_type'] = "error";
+//         header('location: users-add.php'); // Redirect to the form page
+//         exit();
+//     }
+// }
+
+// // Check if email already exists
 $email_check_sql = "SELECT * FROM users WHERE email = :email";
 $stmt = $conn->prepare($email_check_sql);
 $stmt->execute(['email' => $db_arr['email']]);
@@ -55,7 +73,7 @@ try {
     $stmt = $conn->prepare($sql);
     $stmt->execute($db_arr);
 
-    $_SESSION['message'] = "User added successfully!";
+    $_SESSION['message'] = "successfully added to system";
     $_SESSION['msg_type'] = "success";
 } catch (PDOException $e) {
     $_SESSION['message'] = "Error: " . $e->getMessage();

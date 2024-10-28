@@ -1,15 +1,16 @@
 <?php 
 session_start();
 if(!isset($_SESSION['user'])) header('location: login_pages.php');
-$_SESSION['table'] = 'users';
-$user = $_SESSION['user'];
-$users = include('show-users.php');
+$_SESSION['table'] = 'assets';
+$assets = include('asset-show.php')
+
 ?>
 
  <!DOCTYPE html>
  <html lang="en">
  <head>
     <title> View Assets - Inventory Management</title>
+    <link rel="stylesheet" type="text/css" href="css/login.css">
     <?php include('partials/app-header-scripts.php'); ?>
  </head>
  <body>
@@ -30,35 +31,47 @@ $users = include('show-users.php');
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
+                                        <th>Asset Name</th>
+                                        <th>Asset Type</th>
+                                        <th>Description</th>
+                                        <th>Image</th>
+                                        <th>Created By</th>
                                         <th>Created At</th>
+                                        <th>Updated At</th>
+                                        <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach($users as $index => $user){ ?>
+                                    <?php foreach($assets as $index => $asset){ ?>
                                         <tr>
-                                            <td><?= $user['id'] ?></td>
-                                            <td><?= $user['first_name'] ?></td>
-                                            <td><?= $user['last_name'] ?></td>
-                                            <td><?= $user['email'] ?></td>
-                                            <td><?= date('M d, Y', strtotime($user['created_at'])) ?></td>
+                                            <td><?= $asset['id'] ?></td>
+                                            <td><?= $asset['asset_name'] ?></td>
+                                            <td><?= $asset['asset_type'] ?></td>
+                                            <td><?= $asset['description'] ?></td>
                                             <td>
-                    
-                                                <form id="deleteForm" action="delete-user.php" method="POST" onsubmit="return confirm('Are you sure to delete' + ' <?php echo $user['first_name']; ?> <?php echo $user['last_name']; ?> ?');">
-
-                                                    <input type="hidden" name="user_id" value="<?= $user['id'] ?>">
-                                                    <button type="submit" class="delete-button">  <i class= "fa fa-trash"> </i> Delete</button>
-                                                </form>
-
+                                            <img class="productImg" src="uploads/products/<?= $asset['img'] ?> " alt="">
                                             </td>
+                                            <td><?= $asset['created_by'] ?></td>
+                                            <td><?= date('M d, Y', strtotime($asset['created_at'])) ?></td>
+                                            <td><?= date('M d, Y', strtotime($asset['updated_at'])) ?></td>
+                                            <td>
+                                            <form action="edit-asset.php" method="POST" onsubmit="return confirm('Are you sure to edit ' + '<?= $asset['asset_name'] ?> ?');">
+                                                <input type="hidden" name="asset_id" value="<?= $asset['id'] ?>">
+                                                <button type="submit" class="edit-button"><i class="fa fa-edit"></i> Edit</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form id="deleteForm" action="delete-asset.php" method="POST" onsubmit="return confirm('Are you sure to delete ' + '<?= $asset['asset_name'] ?> ?');">
+                                                <input type="hidden" name="asset_id" value="<?= $asset['id'] ?>">
+                                                <button type="submit" class="delete-button"><i class="fa fa-trash"></i> Delete</button>
+                                            </form>
+                                        </td>
                                         </tr>
                                     <?php } ?>
                                 </tbody>
                             </table>
-                            <p class="userCount"><?= count($users) ?> users</p>
+                            <p class="userCount"><?= count($assets) ?> assets</p>
                         </div>
                     </div>
                     </div>

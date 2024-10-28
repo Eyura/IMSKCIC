@@ -11,3 +11,4 @@ $table_columns_mapping = [
         'id', 'asset_id', 'created_by', 'quantity', 'created_at', 'updated_at'
     ],
 ];
+?>

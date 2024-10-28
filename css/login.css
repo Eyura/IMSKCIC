@@ -347,4 +347,8 @@ p.userCount{
     background-color: darkred;
 }
 
-
+/* product image */
+.productImg{
+    width: 70px;
+    height: auto;
+}
