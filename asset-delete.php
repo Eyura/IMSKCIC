@@ -3,11 +3,11 @@ session_start();
 include('connection.php'); // Ganti dengan koneksi database Anda
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $user_id = $_POST['user_id'];
+    $asset_id = $_POST['asset_id'];
 
     // Query untuk menghapus pengguna berdasarkan ID
     $stmt = $conn->prepare("DELETE FROM assets WHERE id = ?");
-    $stmt->execute([$user_id]);
+    $stmt->execute([$asset_id]);
 
     // Set pesan sukses atau gagal
     if ($stmt->rowCount() > 0) {
@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = "Failed to delete user.";
         $_SESSION['msg_type'] = "error";
     }
-
+    
     // Redirect kembali ke halaman sebelumnya
     header("Location: asset-view.php"); // Ganti dengan halaman yang sesuai
     exit();

@@ -34,7 +34,7 @@ div.dashboard_sidebar{
 
 div.dashboard_content_container{
     width: 80%;
-    background-color: rgba(249, 250, 251, 0.6)
+    background-color: rgba(249, 250, 251, 0.6);
 }
 
 h3.dashboard_logo{
@@ -187,6 +187,7 @@ a#logoutBtn{
 div.dashboard_content{
     align-items: center;
     padding: 20px 10px 10px 10px;
+    
     /* background-color: #ffd4d4;  */
     
     /* border-bottom: 4px solid #000; */
@@ -266,9 +267,9 @@ legend {
 }
 
 .responseMessage.success {
-    background-color: #f8d7da;
-    color: #721c24; /* Warna teks merah untuk pesan error */
-    border: 1px solid #f5c6cb;
+    background-color: #d5f3d1;
+    color: #2d612b; /* Warna teks merah untuk pesan error */
+    border: 1px solid #d5f3d1;
 }
 
 .responseMessage.error {
@@ -352,3 +353,44 @@ p.userCount{
     width: 70px;
     height: auto;
 }
+
+/* PRODUCT MESSAGE */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none; /* Hidden by default */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Popup box */
+.popup-content {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 300px;
+    text-align: center;
+}
+
+.popup-content.success {
+    border: 2px solid #28a745;
+}
+
+.popup-content.error {
+    border: 2px solid #dc3545;
+}
+
+.popup-close {
+    margin-top: 10px;
+    cursor: pointer;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+/* veiw assets */
+

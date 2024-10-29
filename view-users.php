@@ -22,7 +22,7 @@ $users = include('show-users.php');
 
             <div class="dashboard_content">
                 
-                    <div class="column column-7">
+                    
                         <h1 class="section_header"> <i class="fa fa-list"></i> List of Users</h1>
                     <div class="section_content">
                         <div class="users">
