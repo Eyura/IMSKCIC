@@ -85,12 +85,13 @@ try {
     $qr_api_url = 'https://api.qrserver.com/v1/create-qr-code/';
     $qr_code_url = $qr_api_url . '?' . http_build_query([
         'data' => $qr_data,
-        'size' => '100x100',
+        'size' => '100x100 ',
         'format' => 'png'
     ]);
 
     // Store QR code URL in session message for display after redirect
-    $_SESSION['message'] = "Successfully added to system! QR Code: <img src='$qr_code_url' alt='QR Code' />";
+    $_SESSION['message'] = "Successfully added to system! ";
+    // QR Code: <img src='$qr_code_url' alt='QR Code' />
     $_SESSION['msg_type'] = "success";
 
 } catch (PDOException $e) {

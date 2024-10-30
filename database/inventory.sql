@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 25, 2024 at 10:16 AM
+-- Generation Time: Oct 30, 2024 at 06:03 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -37,6 +37,14 @@ CREATE TABLE `assets` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `assets`
+--
+
+INSERT INTO `assets` (`id`, `asset_name`, `description`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'susu om ohh', 'susu milo apa lactogen', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-10-28 15:47:28'),
+(2, 'milomu', 'kenyot', 'milosusu.jpg', 'fast moving', 2, '2024-10-30 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -75,7 +83,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `created_at`) VALUES
 (1, 'akmal', 'anjay', 'akmalpassword', 'akmal@ims.com', '2024-10-22'),
 (2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24'),
-(3, 'test', 'testing', '$2y$10$OXsW2K2BYjEHVl/fG8W60OPmq5jfDq7.L9J2QKjZs0A', 'test@gmail.com', '2024-10-25');
+(3, 'admin', 'ganteng', '$2y$10$fOltL5B.X0EsD7tD3bC04.OLqcjxObvAo.T08IFZ3TS', 'abc@ims.com', '2024-10-30');
 
 --
 -- Indexes for dumped tables
@@ -110,7 +118,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assets`
 --
 ALTER TABLE `assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `users`
