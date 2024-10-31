@@ -17,6 +17,8 @@ $db_arr = [];
 foreach ($columns as $column) {
     if (in_array($column, ['created_at'])) {
         $value = date('Y-m-d');
+    } elseif ($column == 'updated_at') {
+        $value = date('Y-m-d');
     } elseif ($column == 'created_by') {
         $value = $_SESSION['user']['id']; // Assuming user ID is stored in the session
     } elseif ($column == 'password') {

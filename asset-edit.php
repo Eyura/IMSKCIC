@@ -34,11 +34,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_asset'])) {
     if (!empty($_FILES['img']['name'])) {
         $img_name = time() . '_' . $_FILES['img']['name'];
         move_uploaded_file($_FILES['img']['tmp_name'], 'uploads/products/' . $img_name);
-        $query = "UPDATE assets SET asset_name = ?, asset_type = ?, description = ?, img = ? WHERE id = ?";
+        $query = "UPDATE assets SET asset_name = ?, asset_type = ?, description = ?, img = ?, updated_at = NOW() WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->execute([$asset_name, $asset_type, $description, $img_name, $asset_id]);
     } else {
-        $query = "UPDATE assets SET asset_name = ?, asset_type = ?, description = ? WHERE id = ?";
+        $query = "UPDATE assets SET asset_name = ?, asset_type = ?, description = ?, updated_at = NOW() WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->execute([$asset_name, $asset_type, $description, $asset_id]);
     }
