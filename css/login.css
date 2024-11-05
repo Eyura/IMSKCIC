@@ -240,6 +240,7 @@ div.dashboard_content_main{
     margin: 4px 2px;
     border-radius: 20px;
     cursor: pointer;
+
   }
   
   .button-container button:hover {
@@ -295,6 +296,9 @@ div.column-5{
 div.column-7{
     width: 57.33%;
     padding-left: 1%;
+}
+div.column-12{
+    width: 100%;
 }
 
 h1.section_header{
@@ -430,3 +434,132 @@ p.userCount{
     color: #800000;
     cursor: pointer;
 }
+
+/* order button */
+.button-order {
+    text-align: end;
+}
+.button-order {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+#addNewBtn {
+    cursor: pointer;
+}
+  
+.button-order button {
+    background: linear-gradient(to right, #93040c, #660000); 
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 10%;
+
+}
+  
+.button-order button:hover {
+    background: #fff; /* Darker Green */
+    color: #660000;
+    
+}
+  
+.button-order button i {
+    margin-right: 5px;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between; /* Menyebar elemen secara merata */
+    align-items: flex-end;
+    width: 100%; /* Pastikan baris mengambil lebar penuh */
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1; /* Mengatur agar setiap grup mengambil ruang yang sama */
+}
+.form-group select, /* Atur lebar select */
+.form-group input { /* Atur lebar input */
+    width: 50%; /* Memastikan elemen mengambil lebar penuh dari grup */
+    box-sizing: border-box; /* Memastikan padding dan border dihitung dalam lebar */
+}
+
+
+ /* button delete */
+.button-delete {
+  width: 15%;
+   text-align: end;
+}
+.button-delete {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button-delete button {
+    background: #fff; /* Darker Green */
+    border: 1px solid;
+    color: #6d6c6c;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    /* margin: 4px 2px; */
+    border-radius: 20px;
+    cursor: pointer;
+    width: 100%;
+
+}
+  
+.button-delete button:hover {
+    background: #a0a0a0;
+    color: #fff;
+}
+  
+.button-delete button i {
+    margin-right: 5px;
+}
+
+/* button checkout */
+.button-checkout {
+    text-align: end;
+}
+.button-checkout {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.button-checkout button {
+    background: linear-gradient(to right, #93040c, #660000);
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 20px;
+    cursor: pointer;
+    width: 10%;
+
+}
+  
+.button-checkout button:hover {
+    background: #fff; /* Darker Green */
+    color: #660000;
+    
+}
+  
+.button-checkout button i {
+    margin-right: 5px;
+}
+
+
+

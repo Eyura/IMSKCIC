@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2024 at 06:03 AM
+-- Generation Time: Nov 05, 2024 at 12:00 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -43,8 +43,35 @@ CREATE TABLE `assets` (
 --
 
 INSERT INTO `assets` (`id`, `asset_name`, `description`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'susu om ohh', 'susu milo apa lactogen', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-10-28 15:47:28'),
-(2, 'milomu', 'kenyot', 'milosusu.jpg', 'fast moving', 2, '2024-10-30 00:00:00', '0000-00-00 00:00:00');
+(1, 'susu om ohh', 'lactogen dong', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-10-31 11:15:51'),
+(2, 'milomu', 'kenyot nyot', 'milosusu.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2024-10-31 10:54:42'),
+(3, 'mau susu dong', 'rfgsefgrwr', 'milosusu.jpg', 'fast moving', 2, '2024-10-31 00:00:00', '2024-10-31 11:59:25');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `checkout`
+--
+
+CREATE TABLE `checkout` (
+  `id` int(11) NOT NULL,
+  `asset_name` varchar(100) NOT NULL,
+  `quantity_received` int(11) NOT NULL,
+  `quantity_ordered` int(11) NOT NULL,
+  `quantity_remaining` int(11) NOT NULL,
+  `checkout_by` varchar(100) NOT NULL,
+  `checkout_at` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `checkout`
+--
+
+INSERT INTO `checkout` (`id`, `asset_name`, `quantity_received`, `quantity_ordered`, `quantity_remaining`, `checkout_by`, `checkout_at`) VALUES
+(1, 'milomu', 0, 2, 2, 'Array', '2024-11-05'),
+(2, 'milomu', 0, 3, 3, 'Array', '2024-11-05'),
+(3, 'susu om ohh', 0, 6, 6, 'Array', '2024-11-05'),
+(4, 'milomu', 1, 1, 0, 'Array', '2024-11-05');
 
 -- --------------------------------------------------------
 
@@ -97,6 +124,12 @@ ALTER TABLE `assets`
   ADD KEY `fk_user` (`created_by`);
 
 --
+-- Indexes for table `checkout`
+--
+ALTER TABLE `checkout`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `stocks`
 --
 ALTER TABLE `stocks`
@@ -118,7 +151,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assets`
 --
 ALTER TABLE `assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `checkout`
+--
+ALTER TABLE `checkout`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`

@@ -33,6 +33,9 @@
                     <li class="subMenuContainer">
                         <a class="subMenuLink" href="./asset-add.php"><i class="fa fa-circle-o"></i>Add Asset</a>
                     </li>
+                    <li class="subMenuContainer">
+                        <a class="subMenuLink" href="./asset-checkout.php"><i class="fa fa-circle-o"></i>Checkout Asset</a>
+                    </li>
                 </ul>
             </li>
             <li class="liMainMenu showHideSubMenu">

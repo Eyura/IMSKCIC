@@ -36,7 +36,7 @@ $user = $_SESSION['user'];
         </div>
     </div>
 
-    <script>
+    <!-- <script>
         var sideBarIsOpen = true;
 
 
@@ -74,7 +74,7 @@ $user = $_SESSION['user'];
                 }   
                 
         } );
-    </script>
+    </script> -->
     <script src="js/script.js?v=?= time(); ?>"> </script>
  </body>
  </html>
