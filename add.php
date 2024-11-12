@@ -1,6 +1,5 @@
 <?php
 session_start();
-include('table_columns.php');
 include('connection.php'); // Ensure connection to the database is included
 
 // Redirect if the user is not authenticated
@@ -9,8 +8,12 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$table_name = $_SESSION['table'];
-$columns = $table_columns_mapping[$table_name];
+$table_name = 'assets';
+
+// Table columns for the 'assets' table
+$columns = ['asset_name', 'description', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
+
+// Prepare the data array
 $db_arr = [];
 
 // Loop through table columns to populate data
@@ -25,6 +28,8 @@ foreach ($columns as $column) {
         $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
     } elseif ($column == 'asset_type') {
         $value = isset($_POST['asset_type']) ? $_POST['asset_type'] : null;
+    } elseif ($column == 'stock') {
+        $value = isset($_POST['stock']) ? (int)$_POST['stock'] : 1;  // Ensure stock is an integer
     } elseif ($column == 'img') {
         $target_dir = "uploads/products/";
         $file_data = $_FILES[$column];
@@ -45,27 +50,8 @@ foreach ($columns as $column) {
     $db_arr[$column] = $value;
 }
 
-// Required fields validation (commented out in your original code)
-// $required_fields = ['first_name', 'last_name', 'email', 'password'];
-// foreach ($required_fields as $field) {
-//     if (empty($db_arr[$field])) {
-//         $_SESSION['message'] = "All fields are required!";
-//         $_SESSION['msg_type'] = "error";
-//         header('location: users-add.php'); // Redirect to the form page
-//         exit();
-//     }
-// }
-
-// Check if email already exists (commented out in your original code)
-// $email_check_sql = "SELECT * FROM users WHERE email = :email";
-// $stmt = $conn->prepare($email_check_sql);
-// $stmt->execute(['email' => $db_arr['email']]);
-// if ($stmt->rowCount() > 0) {
-//     $_SESSION['message'] = "Email is already in use!";
-//     $_SESSION['msg_type'] = "error";
-//     header('location: users-add.php'); // Redirect to the form page
-//     exit();
-// }
+// Check if any required fields are missing (optional validation)
+// You can customize this to include other required fields as necessary
 
 $table_properties = implode(", ", array_keys($db_arr));
 $table_values  = ":" . implode(", :", array_keys($db_arr));
@@ -93,7 +79,6 @@ try {
 
     // Store QR code URL in session message for display after redirect
     $_SESSION['message'] = "Successfully added to system! ";
-    // QR Code: <img src='$qr_code_url' alt='QR Code' />
     $_SESSION['msg_type'] = "success";
 
 } catch (PDOException $e) {

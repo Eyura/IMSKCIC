@@ -6,6 +6,7 @@
     <h3 class="dashboard_logo" id="dashboard_logo">IMS</h3>
     <div class="dashboard_sidebar_user">
         <img src="assets/user-regular.svg" alt="user image" id="userImage">
+        
         <span class="dashboard_name"><?= $user['first_name'] . ' ' .  $user['last_name'] ?></span>
 
     </div>
@@ -28,13 +29,18 @@
                 </a>
                 <ul class="subMenus">
                     <li class="subMenuContainer">
-                        <a class="subMenuLink" href="./asset-view.php"><i class="fa fa-circle-o"></i>View Assets</a>
-                    </li>
-                    <li class="subMenuContainer">
                         <a class="subMenuLink" href="./asset-add.php"><i class="fa fa-circle-o"></i>Add Asset</a>
                     </li>
+                    
+                    <li class="subMenuContainer">
+                        <a class="subMenuLink" href="./asset-view.php"><i class="fa fa-circle-o"></i>View Assets</a>
+                    </li>
+                    
                     <li class="subMenuContainer">
                         <a class="subMenuLink" href="./asset-checkout.php"><i class="fa fa-circle-o"></i>Checkout Asset</a>
+                    </li>
+                    <li class="subMenuContainer">
+                        <a class="subMenuLink" href="./asset-co-view.php"><i class="fa fa-circle-o"></i>View Checkout Asset</a>
                     </li>
                 </ul>
             </li>

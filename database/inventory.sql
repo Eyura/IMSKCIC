@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2024 at 12:00 PM
+-- Generation Time: Nov 12, 2024 at 10:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -30,6 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `assets` (
   `id` int(11) NOT NULL,
   `asset_name` varchar(200) NOT NULL,
+  `stock` int(255) NOT NULL,
   `description` varchar(200) DEFAULT NULL,
   `img` varchar(100) DEFAULT NULL,
   `asset_type` varchar(15) NOT NULL,
@@ -42,10 +43,11 @@ CREATE TABLE `assets` (
 -- Dumping data for table `assets`
 --
 
-INSERT INTO `assets` (`id`, `asset_name`, `description`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'susu om ohh', 'lactogen dong', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-10-31 11:15:51'),
-(2, 'milomu', 'kenyot nyot', 'milosusu.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2024-10-31 10:54:42'),
-(3, 'mau susu dong', 'rfgsefgrwr', 'milosusu.jpg', 'fast moving', 2, '2024-10-31 00:00:00', '2024-10-31 11:59:25');
+INSERT INTO `assets` (`id`, `asset_name`, `stock`, `description`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'susu om ohh', 15, 'lactogen dong', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-11-08 08:45:53'),
+(2, 'milomu', 6, 'kenyot nyot', 'milosusu.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2024-11-11 11:30:15'),
+(3, 'mau susu dong', 11, 'gygygyg', 'milosusu.jpg', 'fast moving', 2, '2024-10-31 00:00:00', '2024-11-08 08:11:48'),
+(4, 'kopi', 7, 'mengokop kopiii', 'kopi.JPG', 'fast moving', 1, '2024-11-12 00:00:00', '2024-11-12 15:12:25');
 
 -- --------------------------------------------------------
 
@@ -60,7 +62,7 @@ CREATE TABLE `checkout` (
   `quantity_ordered` int(11) NOT NULL,
   `quantity_remaining` int(11) NOT NULL,
   `checkout_by` varchar(100) NOT NULL,
-  `checkout_at` date NOT NULL
+  `checkout_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -68,10 +70,9 @@ CREATE TABLE `checkout` (
 --
 
 INSERT INTO `checkout` (`id`, `asset_name`, `quantity_received`, `quantity_ordered`, `quantity_remaining`, `checkout_by`, `checkout_at`) VALUES
-(1, 'milomu', 0, 2, 2, 'Array', '2024-11-05'),
-(2, 'milomu', 0, 3, 3, 'Array', '2024-11-05'),
-(3, 'susu om ohh', 0, 6, 6, 'Array', '2024-11-05'),
-(4, 'milomu', 1, 1, 0, 'Array', '2024-11-05');
+(31, 'milomu', 1, 1, 7, 'akmal anjay', '2024-11-08 08:41:35'),
+(37, 'susu om ohh', 4, 4, 15, 'akmal anjay', '2024-11-11 11:33:10'),
+(38, 'milomu', 4, 4, 6, 'akmal anjay', '2024-11-12 14:14:21');
 
 -- --------------------------------------------------------
 
@@ -109,8 +110,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `created_at`) VALUES
 (1, 'akmal', 'anjay', 'akmalpassword', 'akmal@ims.com', '2024-10-22'),
-(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24'),
-(3, 'admin', 'ganteng', '$2y$10$fOltL5B.X0EsD7tD3bC04.OLqcjxObvAo.T08IFZ3TS', 'abc@ims.com', '2024-10-30');
+(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24');
 
 --
 -- Indexes for dumped tables
@@ -151,19 +151,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assets`
 --
 ALTER TABLE `assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables

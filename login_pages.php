@@ -1,7 +1,7 @@
 <?php 
 
 session_start();
-// if(!isset($_SESSION['user'])) header('location: dashboard.php'); 
+// if(!isset($_SESSION['user'])) header('location: login_pages.php'); 
 
 
 $error_message ='';

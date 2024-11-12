@@ -45,6 +45,11 @@ $users = include('show-users.php');
                         </select>
                     </div>
                     <div>
+                        <label for="stock">Quantity</label>
+                        <input type="number" class="appFormInput" id="stock" name="stock" value="1" min="1" required/>
+                    </div>
+                    
+                    <div>
                         <label for="img">Product Image</label>
                         <input type="file" id="img" name="img" required class="appFormInput"/>
                     </div>

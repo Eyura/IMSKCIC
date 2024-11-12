@@ -15,6 +15,7 @@ toggleBtn.addEventListener('click', (event) => {
             menuIcons[i].style.display = 'none';
         }
 
+        
         document.getElementsByClassName('dashboard_menu_lists') [0].style.textAlign = 'center';
         sideBarIsOpen = false;
     } else {

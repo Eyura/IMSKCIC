@@ -16,6 +16,7 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
     <title>View Assets - Inventory Management</title>
     <link rel="stylesheet" type="text/css" href="css/login.css">
     <link rel="stylesheet" type="text/css" href="css/modal.css">
+    
     <?php include('partials/app-header-scripts.php'); ?>
 </head>
 <body>
@@ -33,11 +34,13 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>NO</th>
                                 <th>Asset Name</th>
+                                <th>Image</th>
                                 <th>Asset Type</th>
                                 <th>Description</th>
-                                <th>Image</th>
+                                <th>Stock</th>
+                                
                                 <th>Barcode</th>
                                 <th>Created By</th>
                                 <th>Created At</th>
@@ -51,9 +54,11 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                                 <tr>
                                     <td><?= $asset['id'] ?></td>
                                     <td><?= $asset['asset_name'] ?></td>
+                                    <td><img class="productImg" src="uploads/products/<?= $asset['img'] ?>" alt=""></td>
                                     <td><?= $asset['asset_type'] ?></td>
                                     <td><?= $asset['description'] ?></td>
-                                    <td><img class="productImg" src="uploads/products/<?= $asset['img'] ?>" alt=""></td>
+                                    <td><?= $asset['stock'] ?></td>
+                                    
                                     <td><img src='<?= $asset['qr_code_url'] ?>' alt="QR Code"></td>
                                     <td>
                                         <?php
@@ -64,7 +69,7 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                                         ?>
                                     </td>
                                     <td><?= date('M d, Y', strtotime($asset['created_at'])) ?></td>
-                                    <td><?= date('M d, Y', strtotime($asset['updated_at'])) ?></td>
+                                    <td><?= date('M d, Y H:i:s', strtotime($asset['updated_at'])) ?></td>
                                     <td>
                                         <button type="button" class="edit-button" onclick="openEditModal(<?= htmlspecialchars(json_encode($asset)) ?>)">
                                             <i class="fa fa-edit"></i> Edit
@@ -110,6 +115,16 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
             </div>
 
             <div>
+                <label for="quantity_add">Quantity to Add</label>
+                <input type="number" class="appFormInput" id="quantity_add" name="quantity_add" value="0" />
+            </div>
+
+            <div>
+                <label for="quantity_rmv">Remove Quantity</label>
+                <input type="number" class="appFormInput" id="quantity_rmv" name="quantity_rmv" value="0"/>
+            </div>
+
+            <div>
                 <label for="editAssetDescription">Description</label>
                 <textarea id="editAssetDescription" name="description" required class="appFormInput"></textarea>
             </div>
@@ -126,6 +141,7 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
         </form>
     </div>
 </div>
+
 
 <script>
     // Open and populate Edit Modal

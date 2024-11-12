@@ -3,6 +3,8 @@ session_start();
 if(!isset($_SESSION['user'])) header('location: login_pages.php');
 
 $user = $_SESSION['user'];
+
+include('status_graph.php');
 ?>
 
  <!DOCTYPE html>
@@ -16,65 +18,99 @@ $user = $_SESSION['user'];
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
  </head>
  <body>
     
     <div id="dashboardMainContainer">
         <?php include ('partials/app-sidebar.php') ?>
-
         <div class="dashboard_content_container" id="dashboard_content_container">
             <?php include ('partials/app-topnav.php') ?>
-
             <div class="dashboard_content">
-          
                 <div class="dashboard_content_main">
+                <!-- <figure class="highcharts-figure">
+                    <div id="container"></div>
+                    <p class="highcharts-description">
+                        uygiygbh7gho7iugog
+                    </p>
+                </figure> -->
 
+                <h1 class="section_header">Data from Database</h1>
+
+                <!-- Bar Chart -->
+                <canvas id="myChart"></canvas>
+
+                <!-- Data Table -->
+                <h1 class="section_header">Data Table</h1>
+                <table id="dataTable">
+                    <thead>
+                        <tr>
+                            <th>Assets</th>
+                            <th>Stocks</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Data rows will be appended here by JavaScript -->
+                    </tbody>
+                </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- <script>
-        var sideBarIsOpen = true;
+    <script src="js/script.js?v=?= time(); ?>"></script>
 
-
-        toggleBtn.addEventListener( 'click', (event) => {
-            event.preventDefault();
-
-
-            if(sideBarIsOpen){
-            dashboard_sidebar.style.transition = '0.9s all';
-            dashboard_sidebar.style.width = '10%';
-            dashboard_content_container.style.width = '90%';
-            dashboard_logo.style.fontSize= '50px';
-            userImage.style.width = '20px';
-
-            menuIcons = document.getElementsByClassName('menuText');
-            for(var i=0; i < menuIcons.length;i++){
-                menuIcons[i].style.display = 'none';
-            }
-
-            document.getElementsByClassName('dashboard_menu_lists') [0].style.textAlign = 'center';
-            sideBarIsOpen = false;
-            }   else{
-                dashboard_sidebar.style.width = '20%';
-                dashboard_content_container.style.width = '80%';
-                dashboard_logo.style.fontSize= '80px';
-                userImage.style.width = '20px';
-
-                menuIcons = document.getElementsByClassName('menuText');
-                for(var i=0; i < menuIcons.length;i++){
-                menuIcons[i].style.display = 'inline';
+    <script>
+        // Fetch data from PHP (status_graph.php) via JavaScript
+        fetch('status_graph.php?json=1')  // Add the ?json=1 query parameter here
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch data');
                 }
+                return response.json();  // Parse the response as JSON
+            })
+            .then(data => {
+                console.log('Fetched Data:', data);  // Debugging step, check in the console
 
-                document.getElementsByClassName('dashboard_menu_lists') [0].style.textAlign = 'left';
-                sideBarIsOpen = true;
-                }   
-                
-        } );
-    </script> -->
-    <script src="js/script.js?v=?= time(); ?>"> </script>
+                // Extract labels and values for the chart
+                const labels = data.map(item => item.colAssets);
+                const values = data.map(item => item.colStocks);
+
+                // Populate the table with data
+                const tableBody = document.getElementById('dataTable').querySelector('tbody');
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `<td>${item.colAssets}</td><td>${item.colStocks}</td>`;
+                    tableBody.appendChild(row);
+                });
+
+                // Bar Chart setup with Chart.js
+                const ctx = document.getElementById('myChart').getContext('2d');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: 'Stocks',
+                            data: values,
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+    </script>
  </body>
  </html>

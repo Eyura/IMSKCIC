@@ -1,4 +1,3 @@
-<!-- checkout.php -->
 <?php 
 session_start();
 if (!isset($_SESSION['user'])) header('location: login_pages.php');
@@ -31,6 +30,15 @@ include('connection.php');
 
         <div class="dashboard_content">
             <h1 class="section_header"><i class="fa fa-cart-plus"></i> Checkout</h1>
+            
+            <!-- Menampilkan pesan error jika ada -->
+            <?php if (isset($_SESSION['message'])): ?>
+                <div class="alert <?= $_SESSION['msg_type'] ?>">
+                    <?= $_SESSION['message']; ?>
+                    <?php unset($_SESSION['message']); ?>
+                </div>
+            <?php endif; ?>
+
             <div class="button-order">
                 <button type="button" id="addNewBtn"><i class="fa fa-plus"></i> Add New</button>
             </div>
@@ -71,14 +79,15 @@ include('connection.php');
 </div>
 
 <script>
+// Kode JavaScript yang telah Anda buat untuk menambahkan row dan menghapus row tetap sama.
 var assetOptions = <?= $asset_options_json ?>; // JSON data asset
 
 function updateAssetName(row) {
-    var selectElement = document.getElementById(`asset_name_${row}`);
+    var selectElement = document.getElementById("asset_name_" + row);
     var selectedIndex = selectElement.selectedIndex;
     var selectedOption = selectElement.options[selectedIndex];
 
-    document.getElementById(`hidden_asset_name_${row}`).value = selectedOption.text;
+    document.getElementById("hidden_asset_name_" + row).value = selectedOption.text;
 }
 
 function script() {
@@ -96,8 +105,8 @@ function script() {
 
         var newRow = document.createElement('div');
         newRow.className = 'form-row';
-        newRow.innerHTML = `
-            <div class="form-group">
+        newRow.innerHTML = 
+            `<div class="form-group">
                 <label for="asset_name_${rowCount}">Asset Name</label>
                 <select id="asset_name_${rowCount}" name="asset_id[]" required class="appFormInput" onchange="updateAssetName(${rowCount})">
                     <option value="">Select Asset</option>
@@ -113,8 +122,7 @@ function script() {
                 <div class="button-delete">
                     <button type="button" class="fa fa-trash"></button>
                 </div>
-            </div>
-        `;
+            </div>`;
 
         document.getElementById('checkoutList').appendChild(newRow);
     },
@@ -130,6 +138,7 @@ function script() {
 const myScript = new script();
 myScript.initialize();
 </script>
+
 <?php include('partials/app-scripts.php'); ?>
 </body>
 </html>

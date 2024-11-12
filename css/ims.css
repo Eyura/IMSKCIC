@@ -22,6 +22,7 @@ body {
     font-size: 10px;
     
 }
+
 /* Dark overlay */
 body::before {
     content: '';
