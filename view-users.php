@@ -21,13 +21,17 @@ $users = include('show-users.php');
             <?php include ('partials/app-topnav.php') ?>
 
             <div class="dashboard_content">
-                
-                    
-                        <h1 class="section_header"> <i class="fa fa-list"></i> List of Users</h1>
-                    <div class="section_content">
-                        <div class="users">
-                            <table>
-                                <thead>
+    <div class="assetViewCont">
+        <div class="section_content">
+            <div class="users">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="12" class="table-header">
+                                <h1 class="section_header"><i class="fa fa-list"></i> List of Assets</h1>
+                            </th>
+                            
+                        </tr>
                                     <tr>
                                         <th>ID</th>
                                         <th>First Name</th>

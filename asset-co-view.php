@@ -20,8 +20,8 @@ $grouped_data = []; // Menyimpan data yang dikelompokkan berdasarkan tanggal
 
 // Kelompokkan data berdasarkan tanggal checkout (tanpa jam dan menit)
 foreach ($checkout_data as $data) {
-    $checkout_day = date('Y-m-d', strtotime($data['checkout_at'])); // Ambil hanya tanggalnya
-    $grouped_data[$checkout_day][] = $data; // Tambahkan data ke grup yang sesuai
+    $checkout_month = date('m - Y', strtotime($data['checkout_at'])); // Ambil hanya tanggalnya
+    $grouped_data[$checkout_month][] = $data; // Tambahkan data ke grup yang sesuai
 }
 
 ?>
@@ -41,12 +41,14 @@ foreach ($checkout_data as $data) {
         <?php include('partials/app-topnav.php'); ?>
 
         <div class="dashboard_content">
+        <div class="addContainer">
+        <div class="userAddFormContainer" id="userAddFormContainer">
             <h1 class="section_header"><i class="fa fa-eye"></i> <i class="fa fa-eye"></i> View <i class="fa fa-eye"></i> Checkout <i class="fa fa-eye"></i> Assets <i class="fa fa-eye"></i> <i class="fa fa-eye"></i></h1>
 
             <!-- Tampilkan tabel untuk setiap grup tanggal -->
-            <?php foreach ($grouped_data as $checkout_day => $data_group): ?>
+            <?php foreach ($grouped_data as $checkout_month => $data_group): ?>
                 <div class="checkout_table_container">
-                    <h4>Checkout Date: <?= htmlspecialchars($checkout_day) ?></h4> <!-- Tampilkan tanggal -->
+                    <h4>Checkout Month: <?= htmlspecialchars($checkout_month) ?></h4> <!-- Tampilkan tanggal -->
                     <table class="checkout_table">
                         <thead>
                             <tr>
@@ -73,7 +75,8 @@ foreach ($checkout_data as $data) {
                     </table>
                 </div>
             <?php endforeach; ?>
-
+            </div>
+            </div>
         </div>       
     </div>
 </div>

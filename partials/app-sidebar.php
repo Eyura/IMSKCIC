@@ -18,7 +18,7 @@
                 <a href="./dashboard.php" > <i class="fa fa-dashboard"></i> <span class="menuText"> Dashboard </span> </a>
             </li>
             <li class="liMainMenu">
-                <a href=" "> <i class="fa fa-dashboard"></i> <span class="menuText"> Report </span>  </a>
+                <a href="./report.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> Report </span>  </a>
             </li>
 
             <li class="liMainMenu">

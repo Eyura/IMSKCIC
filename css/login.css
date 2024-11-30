@@ -24,17 +24,18 @@ div.dashboard_sidebar{
     width: 20%;
     /* background: #93040c; */
     background: linear-gradient(to right, #93040c, #660000);
-    height: 100vh;
+    height: auto;
     margin: 0;
     padding: 0;
     position: relative;
-    border-top-right-radius: 30px;  
-    border-bottom-right-radius: 30px;
+    border-top-right-radius: 3px;  
+    border-bottom-right-radius: 3px;
 }
 
 div.dashboard_content_container{
     width: 80%;
-    background-color: rgba(249, 250, 251, 0.6);
+    background-color: rgba(240, 240, 240, 0.6);
+    height: 100vh;
 }
 
 h3.dashboard_logo{
@@ -147,6 +148,12 @@ i.iconArrow{
 div.dashboard_topNav{
     background: #fff;
     padding: 18px 15px 10px 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
 }
 
 div.dashboard_topNav a {
@@ -186,7 +193,8 @@ a#logoutBtn{
 
 div.dashboard_content{
     align-items: center;
-    padding: 20px 10px 10px 10px;
+    padding: 20px 10px 10px 15px;
+    height: 90vh;
     
     /* background-color: #ffd4d4;  */
     
@@ -195,14 +203,37 @@ div.dashboard_content{
 
 div.dashboard_content_main{
     background-color: #fff;
-    /* text-align: center; */
-    min-height: 100%; 
-    height: max-content;
+    border-radius: 15px;
+    /*text-align: center;
+    *//*min-height: 100vh;
+    height: 100vh;
+    */-webkit-border-radius: 10px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    -webkit-border-radius: 15px;
+}
 
+div.addContainer{
+    display: flexx;
+    margin-top: 10px; 
+}
+
+div.userAddFormContainer{
+    flex: 1;
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    -webkit-border-radius: 8px;
+    -moz-border-radius: 8px;
+    -ms-border-radius: 8px;
+    -o-border-radius: 8px;
 }
 
 .appForm {
-    background-color: #f0f0f0;
+    /* background-color: #f0f0f0; */
     padding: 20px;
     border-radius: 20px;
     width: 90% ;
@@ -261,6 +292,8 @@ legend {
     margin-bottom: 10px;
 }
 
+
+
 .responseMessage {
     padding: 10px;
     margin: 20px 0;
@@ -306,8 +339,7 @@ h1.section_header{
     color: #660000;
     border-bottom: 1px solid #660000;
     border-left: 4px solid #660000;
-    padding-bottom: 11px;
-    padding-left: 20px;
+    padding: 10px;
 }
 
 table, th, td{
@@ -323,7 +355,7 @@ table th{
     font-size: 12px;
     text-transform: uppercase;
     text-align: center;
-    background: #f0f0f0;
+    background: #fff;
 }
 
 table td{
@@ -396,7 +428,7 @@ p.userCount{
     text-decoration: underline;
 }
 
-/* veiw assets */
+
 
 /* edit asset */
 /* Overlay styling */
@@ -561,19 +593,38 @@ p.userCount{
     margin-right: 5px;
 }
 
-/* TABLE DESIGN */
+/* TABLE DESIGN pada asset view */
+div.assetViewCont{
+    margin-top: 10px;
+}
+.table-header {
+    text-align: start;
+    font-size: 1.5rem;
+    padding: 10px;
+    background-color: #fff; /* Warna latar belakang untuk header */
+    border-bottom: none; /* Garis bawah untuk memisahkan header */
+}
+.section_header {
+    margin: 0; /* Hilangkan margin bawaan h1 */
+}
 
 table {
     width: 100%;
     border-collapse: collapse;
-    background: rgba(255, 255, 255, 0.9);
+    background: #fff;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     border-radius: 8px;
     overflow: hidden;
+    
 }
 
 table thead {
     background-color: #e0e0e0;
+    border-top: none;
+    
+}
+table tr:first-child th {
+    border-top: none; 
 }
 
 table th, table td {
@@ -584,14 +635,15 @@ table th, table td {
     color: #555;
     border-left: none;  /* Menghilangkan garis vertikal kiri */
     border-right: none; /* Menghilangkan garis vertikal kanan */
+    border-top: none; 
 }
 
 table th {
     font-weight: bold;
 }
 
-table tbody tr:nth-child(even) {
-    background-color: #f9f9f9;
+table tbody tr{
+    background-color: #fff;
 }
 
 table tbody tr:hover {
@@ -668,24 +720,146 @@ table td img {
     background-color: #f44336;
 }
 
-/* Scale down the chart container and table */
+/* Chart Container and Table Styling */
 #myChart {
-    max-width: 1000px; /* Increase width */
-    max-height: 700px; /* Increase height */
-    width: 100%; /* Full width to keep responsiveness */
-    height: auto; /* Maintain aspect ratio */
-    margin: 0 auto;
+    max-width: 800px; /* Adjust width for better aspect */
+    max-height: 500px; /* Adjust height for proportion */
+    width: 100%;
+    height: auto;
+    margin: 20px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#checkoutLineChart {
+    max-width: 800px; /* Adjust width for better aspect */
+    max-height: 500px; /* Adjust height for proportion */
+    width: 100%;
+    height: auto;
+    margin: 20px auto;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #dataTable {
-    max-width: 1500px;
+    max-width: 1200px;
     margin: 20px auto;
-    font-size: 0.85em; /* Reduce font size slightly */
+    font-size: 0.85em; /* Slightly smaller font */
+    border-collapse: collapse; /* Clean up table border styling */
 }
 
 #dataTable th, #dataTable td {
-    padding: 6px;
+    padding: 8px 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc; /* Optional: Horizontal borders only */
+}
+
+#dataTable th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+/* Flexbox container for the two charts */
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Jarak antara kotak chart */
+    margin-top: 20px; /* Jarak dari konten sebelumnya */
+    background-color: rgba(240, 240, 240, 0.6);
+}
+
+.chart-box {
+    flex: 1;
+    background: #fff; /* Warna latar belakang */
+    border: 1px solid #ddd; /* Batasan kotak */
+    border-radius: 8px; /* Sudut melengkung */
+    padding: 20px; /* Padding dalam kotak */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+}
+
+canvas {
+    width: 100% !important; /* Make canvas take the full width of its container */
+    height: 400px !important; /* Set a fixed height for the chart */
+}
+
+/* report */
+.reportsWrapper {
+    display: flex;
+    justify-content: center; /* Pusatkan secara horizontal */
+  }
+.reportsContainer{
+    display: flex;
+    justify-content: space-between;
+    gap: 30px; /* Jarak antara kotak chart */
+    margin-top: 20px; /* Jarak dari konten sebelumnya */
+    margin-left: 20px;
+    margin-right: 20px;
+    background-color: rgba(240, 240, 240, 0.6);
+    width: 800px;
+    
+}
+.reportBox{
+    flex: 1;
+    background: #fff; /* Warna latar belakang */
+    border: 1px solid #ddd; /* Batasan kotak */
+    border-radius: 8px; /* Sudut melengkung */
+    padding: 20px; /* Padding dalam kotak */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
+    
+}
+h1.report_header{
+    font-size: 20px;
+    color: #660000;
+    padding: 10px;
+}
+
+.alignRight{
+    margin-top: 30px;
+    text-align: right;
+}
+.reportExportBtnExc{
+    padding: 4px 15px;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: #1D6F42;
+    color: white;
+    margin-left: 13px;
+    font-size: 11px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+.reportExportBtnExc:hover{
+    border: 1px solid #1D6F42;
+    background: #fff;
+    color: #1D6F42;
+}
+
+.reportExportBtnPDF{
+    padding: 4px 15px;
+    display: inline-block;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: #F40F02;
+    color: white;
+    margin-left: 13px;
+    font-size: 11px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    -webkit-border-radius: 6px;
+    -moz-border-radius: 6px;
+    -ms-border-radius: 6px;
+    -o-border-radius: 6px;
+}
+.reportExportBtnPDF:hover{
+    border: 1px solid #F40F02;
+    background: #fff;
+    color: #660000 ;
+    font-size: 11px;
 }

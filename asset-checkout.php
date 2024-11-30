@@ -29,6 +29,8 @@ include('connection.php');
         <?php include('partials/app-topnav.php'); ?>
 
         <div class="dashboard_content">
+        <div class="addContainer">
+        <div class="userAddFormContainer" id="userAddFormContainer">
             <h1 class="section_header"><i class="fa fa-cart-plus"></i> Checkout</h1>
             
             <!-- Menampilkan pesan error jika ada -->
@@ -76,6 +78,8 @@ include('connection.php');
             </form>
         </div>       
     </div>
+    </div>
+    </div> 
 </div>
 
 <script>

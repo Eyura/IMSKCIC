@@ -23,13 +23,9 @@ $users = include('show-users.php');
             <?php include ('partials/app-topnav.php') ?>
 
             <div class="dashboard_content">
-                <div class="row">
-                    <div class="column column-12">
-                        <h1 class="section_header"> <i class="fa fa-plus"></i> Create User</h1>
-                    <div id="userAddFormContainer">
-
-                    </div>
-                    <div class="dashboard_content_main">
+            <div class="addContainer">
+                <div class="userAddFormContainer" id="userAddFormContainer">
+                    <h1 class="section_header"><i class="fa fa-plus"></i> Add Asset</h1>
                     <form action="add.php" method="POST" class="appForm">
                         <div>
                             <label for="first_name">First Name</label>

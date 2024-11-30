@@ -28,67 +28,73 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
         <?php include('partials/app-topnav.php'); ?>
 
         <div class="dashboard_content">
-            <h1 class="section_header"><i class="fa fa-list"></i> List of Assets</h1>
-            <div class="section_content">
-                <div class="users">
-                    <table>
-                        <thead>
+    <div class="assetViewCont">
+        <div class="section_content">
+            <div class="users">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="12" class="table-header">
+                                <h1 class="section_header"><i class="fa fa-list"></i> List of Assets</h1>
+                            </th>
+                            
+                        </tr>
+                        <tr>
+                            <th>NO</th>
+                            <th>Asset Name</th>
+                            <th>Image</th>
+                            <th>Asset Type</th>
+                            <th>Description</th>
+                            <th>Stock</th>
+                            <th>Barcode</th>
+                            <th>Created By</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($assets as $asset) { ?>
                             <tr>
-                                <th>NO</th>
-                                <th>Asset Name</th>
-                                <th>Image</th>
-                                <th>Asset Type</th>
-                                <th>Description</th>
-                                <th>Stock</th>
+                                <td><?= $asset['id'] ?></td>
+                                <td><?= $asset['asset_name'] ?></td>
+                                <td><img class="productImg" src="uploads/products/<?= $asset['img'] ?>" alt=""></td>
+                                <td><?= $asset['asset_type'] ?></td>
+                                <td><?= $asset['description'] ?></td>
+                                <td class="stock"><?= $asset['stock'] ?></td>
+                                <td><img src='<?= $asset['qr_code_url'] ?>' alt="QR Code"></td>
+                                <td>
+                                    <?php
+                                        $stmt = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
+                                        $stmt->execute([$asset['created_by']]);
+                                        $creator = $stmt->fetch(PDO::FETCH_ASSOC);
+                                        echo $creator ? $creator['first_name'] . ' ' . $creator['last_name'] : 'Unknown';
+                                    ?>
+                                </td>
+                                <td><?= date('M d, Y', strtotime($asset['created_at'])) ?></td>
+                                <td><?= date('M d, Y H:i:s', strtotime($asset['updated_at'])) ?></td>
+                                <td>
+                                    <button type="button" class="edit-button" onclick="openEditModal(<?= htmlspecialchars(json_encode($asset)) ?>)">
+                                        <i class="fa fa-edit"></i> Edit
+                                    </button>
+                                </td>
+                                <td>
+                                    <form action="asset-delete.php" method="POST" onsubmit="return confirm('Are you sure to delete <?= $asset['asset_name'] ?>?');">
+                                        <input type="hidden" name="asset_id" value="<?= $asset['id'] ?>">
+                                        <button type="submit" class="delete-button"><i class="fa fa-trash"></i> Delete</button>
+                                    </form>
+                                </td>
                                 
-                                <th>Barcode</th>
-                                <th>Created By</th>
-                                <th>Created At</th>
-                                <th>Updated At</th>
-                                <th>Edit</th>
-                                <th>Delete</th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <?php foreach ($assets as $asset) { ?>
-                                <tr>
-                                    <td><?= $asset['id'] ?></td>
-                                    <td><?= $asset['asset_name'] ?></td>
-                                    <td><img class="productImg" src="uploads/products/<?= $asset['img'] ?>" alt=""></td>
-                                    <td><?= $asset['asset_type'] ?></td>
-                                    <td><?= $asset['description'] ?></td>
-                                    <td><?= $asset['stock'] ?></td>
-                                    
-                                    <td><img src='<?= $asset['qr_code_url'] ?>' alt="QR Code"></td>
-                                    <td>
-                                        <?php
-                                            $stmt = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
-                                            $stmt->execute([$asset['created_by']]);
-                                            $creator = $stmt->fetch(PDO::FETCH_ASSOC);
-                                            echo $creator ? $creator['first_name'] . ' ' . $creator['last_name'] : 'Unknown';
-                                        ?>
-                                    </td>
-                                    <td><?= date('M d, Y', strtotime($asset['created_at'])) ?></td>
-                                    <td><?= date('M d, Y H:i:s', strtotime($asset['updated_at'])) ?></td>
-                                    <td>
-                                        <button type="button" class="edit-button" onclick="openEditModal(<?= htmlspecialchars(json_encode($asset)) ?>)">
-                                            <i class="fa fa-edit"></i> Edit
-                                        </button>
-                                    </td>
-                                    <td>
-                                        <form action="asset-delete.php" method="POST" onsubmit="return confirm('Are you sure to delete <?= $asset['asset_name'] ?>?');">
-                                            <input type="hidden" name="asset_id" value="<?= $asset['id'] ?>">
-                                            <button type="submit" class="delete-button"><i class="fa fa-trash"></i> Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            <?php } ?>
-                        </tbody>
-                    </table>
-                    <p class="userCount"><?= count($assets) ?> assets</p>
-                </div>
+                        <?php } ?>
+                    </tbody>
+                </table>
+                <p class="userCount"><?= count($assets) ?> assets</p>
             </div>
         </div>
+    </div>
+</div>
     </div>
 </div>
 
