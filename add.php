@@ -8,84 +8,100 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-$table_name = 'assets';
+// Ambil nama tabel dari session
+$table_name = $_POST['table'] ?? '';
 
-// Table columns for the 'assets' table
-$columns = ['asset_name', 'description', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
+// Tangani data untuk tabel users
+if ($table_name === 'users') {
+    $columns = ['first_name', 'last_name', 'email', 'password', 'created_at', 'updated_at'];
+    $db_arr = [];
 
-// Prepare the data array
-$db_arr = [];
-
-// Loop through table columns to populate data
-foreach ($columns as $column) {
-    if (in_array($column, ['created_at'])) {
-        $value = date('Y-m-d');
-    } elseif ($column == 'updated_at') {
-        $value = date('Y-m-d');
-    } elseif ($column == 'created_by') {
-        $value = $_SESSION['user']['id']; // Assuming user ID is stored in the session
-    } elseif ($column == 'password') {
-        $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
-    } elseif ($column == 'asset_type') {
-        $value = isset($_POST['asset_type']) ? $_POST['asset_type'] : null;
-    } elseif ($column == 'stock') {
-        $value = isset($_POST['stock']) ? (int)$_POST['stock'] : 1;  // Ensure stock is an integer
-    } elseif ($column == 'img') {
-        $target_dir = "uploads/products/";
-        $file_data = $_FILES[$column];
-
-        $file_name = $file_data['name'];
-        $check = getimagesize($file_data['tmp_name']);
-        if ($check) {
-            if (move_uploaded_file($file_data['tmp_name'], $target_dir . $file_name)) {
-                $value = $file_name;
-            }
+    foreach ($columns as $column) {
+        if ($column === 'created_at' || $column === 'updated_at') {
+            $value = date('Y-m-d');
+        } elseif ($column === 'password') {
+            $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
         } else {
-            // Handle image upload error if needed
+            $value = $_POST[$column] ?? '';
         }
-    } else {
-        $value = isset($_POST[$column]) ? trim($_POST[$column]) : '';
+        $db_arr[$column] = $value;
     }
 
-    $db_arr[$column] = $value;
+    $table_properties = implode(", ", array_keys($db_arr));
+    $table_values = ":" . implode(", :", array_keys($db_arr));
+
+    try {
+        // Insert data
+        $sql = "INSERT INTO $table_name ($table_properties) VALUES ($table_values)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($db_arr);
+
+        $_SESSION['message'] = "User berhasil ditambahkan!";
+        $_SESSION['msg_type'] = "success";
+    } catch (PDOException $e) {
+        $_SESSION['message'] = "Error: " . $e->getMessage();
+        $_SESSION['msg_type'] = "error";
+    }
+
+    header('location: ' . $_SESSION['redirect_to']);
+    exit();
 }
 
-// Check if any required fields are missing (optional validation)
-// You can customize this to include other required fields as necessary
+// Tangani data untuk tabel assets (tetap sama seperti sebelumnya)
+if ($table_name === 'assets') {
+    $columns = ['asset_name', 'description', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
+    $db_arr = [];
 
-$table_properties = implode(", ", array_keys($db_arr));
-$table_values  = ":" . implode(", :", array_keys($db_arr));
+    foreach ($columns as $column) {
+        if (in_array($column, ['created_at', 'updated_at'])) {
+            $value = date('Y-m-d');
+        } elseif ($column === 'created_by') {
+            $value = $_SESSION['user']['id'];
+        } elseif ($column === 'password') {
+            $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
+        } elseif ($column === 'asset_type') {
+            $value = $_POST[$column] ?? null;
+        } elseif ($column === 'stock') {
+            $value = (int)($_POST[$column] ?? 1);
+        } elseif ($column === 'img') {
+            $target_dir = "uploads/products/";
+            $file_data = $_FILES[$column] ?? null;
 
-try {
-    // Insert data
-    $sql = "INSERT INTO $table_name ($table_properties) VALUES ($table_values)";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute($db_arr);
+            if ($file_data && $file_data['tmp_name']) {
+                $file_name = $file_data['name'];
+                $check = getimagesize($file_data['tmp_name']);
+                if ($check) {
+                    if (move_uploaded_file($file_data['tmp_name'], $target_dir . $file_name)) {
+                        $value = $file_name;
+                    }
+                }
+            } else {
+                $value = null;
+            }
+        } else {
+            $value = $_POST[$column] ?? '';
+        }
 
-    // Generate QR code data
-    $qr_data = json_encode([
-        'asset_name' => $db_arr['asset_name'], // Assuming 'asset_name' is one of your columns
-        'description' => $db_arr['description'], // Assuming 'description' is one of your columns
-        'asset_type' => $db_arr['asset_type'], // Assuming 'asset_type' is one of your columns
-    ]);
+        $db_arr[$column] = $value;
+    }
 
-    // Create QR code URL using the API
-    $qr_api_url = 'https://api.qrserver.com/v1/create-qr-code/';
-    $qr_code_url = $qr_api_url . '?' . http_build_query([
-        'data' => $qr_data,
-        'size' => '100x100 ',
-        'format' => 'png'
-    ]);
+    $table_properties = implode(", ", array_keys($db_arr));
+    $table_values = ":" . implode(", :", array_keys($db_arr));
 
-    // Store QR code URL in session message for display after redirect
-    $_SESSION['message'] = "Successfully added to system! ";
-    $_SESSION['msg_type'] = "success";
+    try {
+        // Insert data
+        $sql = "INSERT INTO $table_name ($table_properties) VALUES ($table_values)";
+        $stmt = $conn->prepare($sql);
+        $stmt->execute($db_arr);
 
-} catch (PDOException $e) {
-    $_SESSION['message'] = "Error: " . $e->getMessage();
-    $_SESSION['msg_type'] = "error";
+        $_SESSION['message'] = "Asset berhasil ditambahkan!";
+        $_SESSION['msg_type'] = "success";
+    } catch (PDOException $e) {
+        $_SESSION['message'] = "Error: " . $e->getMessage();
+        $_SESSION['msg_type'] = "error";
+    }
+
+    header('location: ' . $_SESSION['redirect_to']);
+    exit();
 }
-
-header('location: ' . $_SESSION['redirect_to']); // Redirect to the specified page
-exit();
 ?>

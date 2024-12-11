@@ -36,6 +36,7 @@ div.dashboard_content_container{
     width: 80%;
     background-color: rgba(240, 240, 240, 0.6);
     height: 100vh;
+
 }
 
 h3.dashboard_logo{
@@ -250,17 +251,21 @@ div.userAddFormContainer{
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
-    border-radius: 30px;
+    border-radius: 12px;
     margin-bottom: 15px;
     box-sizing: border-box;
-  }
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
   
   .button-container {
     text-align: left;
   }
   
   .button-container button {
-    background: linear-gradient(to right, #93040c, #660000); 
+    background: linear-gradient(to right, #93040c, #660000);
     border: none;
     color: #fff;
     padding: 10px 20px;
@@ -269,10 +274,13 @@ div.userAddFormContainer{
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
-
-  }
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
   
   .button-container button:hover {
     background: #fff; /* Darker Green */
@@ -480,7 +488,7 @@ p.userCount{
 }
   
 .button-order button {
-    background: linear-gradient(to right, #93040c, #660000); 
+    background: linear-gradient(to right, #93040c, #660000);
     border: none;
     color: #fff;
     padding: 10px 20px;
@@ -489,10 +497,13 @@ p.userCount{
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
     width: 10%;
-
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
 }
   
 .button-order button:hover {
@@ -577,10 +588,13 @@ p.userCount{
     display: inline-block;
     font-size: 16px;
     margin: 4px 2px;
-    border-radius: 20px;
+    border-radius: 12px;
     cursor: pointer;
     width: 10%;
-
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
 }
   
 .button-checkout button:hover {
@@ -807,7 +821,6 @@ canvas {
     border-radius: 8px; /* Sudut melengkung */
     padding: 20px; /* Padding dalam kotak */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Efek bayangan */
-    
 }
 h1.report_header{
     font-size: 20px;
@@ -863,3 +876,140 @@ h1.report_header{
     color: #660000 ;
     font-size: 11px;
 }
+
+/* permission */
+
+
+#permissionContainer{
+    margin-bottom: 15px;
+}
+.row {
+    display: flex; /* Mengatur elemen dalam baris */
+    flex-wrap: wrap; /* Memungkinkan baris baru jika kolom terlalu banyak */
+    margin: 0 -15px; /* Menambahkan margin negatif untuk kompensasi padding */
+}
+
+.kolom1, .kolom2, .kolom3 {
+    padding: 4px 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: black;
+    margin-left: 13px;
+    font-size: 13px;
+    border: 1px solid #b3b3b3;
+    border-radius: 12px;
+    width: 50px;
+    height: 20px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+    cursor: pointer;
+}
+
+.kolom1:hover, .kolom2:hover, .kolom3:hover {
+    background-color: rgba(240, 240, 240, 0.9); 
+}
+
+.moduleFunc{
+    text-align: center;
+}
+
+.permissionActive{
+    background-color: rgba(240, 240, 240, 0.9) ;
+    transition: 0.3s;
+    -webkit-transition: 0.3s;
+    -moz-transition: 0.3s;
+    -ms-transition: 0.3s;
+    -o-transition: 0.3s;
+}
+
+@media (max-width: 768px) {
+    body{
+        margin: 0; /* Hapus margin bawaan */
+        padding: 0;
+        height: 100vh; /* Tinggi penuh layar */
+        overflow: hidden;
+    }
+
+    div.dashboardMainContainer {
+        display: flex; /* Menggunakan flexbox */
+        flex-direction: column; 
+        height: auto;
+    }
+
+    div.dashboard_topNav {
+        background: #fff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10; /* Pastikan di atas elemen lainnya */
+        position: relative; /* Jangan gunakan fixed agar sesuai urutan */
+        margin-bottom: 10px; /* Beri jarak dari sidebar */
+    }
+
+    div.dashboard_sidebar {
+        width: 100%; /* Lebar penuh */
+        background: linear-gradient(to right, #93040c, #660000);
+        margin: 0;
+        padding: 10px 0;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        position: relative; /* Tetap di bawah topNav */
+    }
+
+    div.dashboard_content_container {
+        background-color: rgba(240, 240, 240, 0.6);
+        margin-top: 0;
+        
+    }
+    div.userAddFormContainer {
+        flex: 1;
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        -webkit-border-radius: 8px;
+        width: 80;
+    }
+    div.dashboard_content{
+        height: auto;
+    }
+    
+
+    .button-container button {
+        background: linear-gradient(to right, #93040c, #660000);
+        border: none;
+        color: #fff;
+        padding: 10px 16px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 13px;
+        margin: 4px 2px;
+        border-radius: 12px;
+        cursor: pointer;
+        -webkit-border-radius: 12px;
+    }
+
+    .kolom1, .kolom2, .kolom3 {
+        padding: 4px 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-decoration: none;
+        color: black;
+        margin-left: 13px;
+        margin-bottom: 4px;
+        font-size: 13px;
+        border: 1px solid #b3b3b3;
+        border-radius: 12px;
+        width: 50px;
+        height: 20px;
+        -webkit-border-radius: 12px;
+    }
+
+}
+
+

@@ -3,15 +3,12 @@
     padding: 0;
     box-sizing: border-box;
 }
-
 body {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(90deg, rgba(198,133,77,1) 23%, rgba(196,177,164,1) 80%, rgba(143,46,52,1) 100%);
-    
-    /* background-image: url('bg1.jpeg'); */
+background: linear-gradient(90deg, rgb(215, 129, 40) 23%, rgb(136, 69, 51) 80%);
     font-family: 'Rubik';
     background-size: cover;
 }
@@ -166,5 +163,57 @@ body::before {
     color: white;
     transition: 0.5s;
 }
+
+/* Media Query untuk perangkat mobile */
+@media (max-width: 768px) {
+    .container {
+        display: flex; /* Pastikan menggunakan flexbox */
+        flex-direction: column; /* Ubah menjadi kolom untuk perangkat mobile */
+        justify-content: center; /* Posisikan konten di tengah vertikal */
+        align-items: center; /* Posisikan konten di tengah horizontal */
+        width: 95%; /* Pastikan container memenuhi lebar layar */
+        margin-left: 10px;
+    }
+
+    .left-section {
+        width: 100%; /* Full width pada mobile */
+        height: 200px; /* Menentukan tinggi untuk gambar */
+    }
+
+    .right-section {
+        width: 100%; /* Full width pada mobile */
+        padding: 20px; /* Memberikan padding pada right section */
+        display: flex;
+        justify-content: center; /* Posisikan isi di tengah secara horizontal */
+        align-items: center; /* Posisikan isi di tengah secara vertikal */
+    }
+}
+
+@media (max-width: 1024px) {
+    .container {
+        display: flex; /* Pastikan menggunakan flexbox */
+        flex-direction: column; /* Ubah menjadi kolom untuk perangkat dengan lebar 1024px atau lebih kecil */
+        justify-content: center; /* Posisikan konten di tengah vertikal */
+        align-items: center; /* Posisikan konten di tengah horizontal */
+        width: 95%; /* Pastikan container memenuhi lebar layar */
+        margin: 0 auto; /* Posisikan container di tengah layar */
+        height: auto; /* Tinggi container mengikuti tinggi konten */
+    }
+
+    .left-section {
+        width: 100%; /* Full width pada tablet atau perangkat dengan lebar <= 1024px */
+        height: 200px; /* Menentukan tinggi untuk gambar */
+    }
+
+    .right-section {
+        width: 100%; /* Full width pada tablet atau perangkat dengan lebar <= 1024px */
+        padding: 20px; /* Memberikan padding pada right section */
+        display: flex;
+        justify-content: center; /* Posisikan isi di tengah secara horizontal */
+        align-items: center; /* Posisikan isi di tengah secara vertikal */
+    }
+}
+
+
 
 

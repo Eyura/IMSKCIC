@@ -28,7 +28,7 @@ $users = include('show-users.php');
                     <thead>
                         <tr>
                             <th colspan="12" class="table-header">
-                                <h1 class="section_header"><i class="fa fa-list"></i> List of Assets</h1>
+                                <h1 class="section_header"><i class="fa fa-list"></i> List of Users</h1>
                             </th>
                             
                         </tr>

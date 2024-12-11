@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 07:20 AM
+-- Generation Time: Dec 11, 2024 at 08:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -44,10 +44,10 @@ CREATE TABLE `assets` (
 --
 
 INSERT INTO `assets` (`id`, `asset_name`, `stock`, `description`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'susu om ohh', 14, 'lactogen dong', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-11-08 08:45:53'),
-(2, 'milomu', 6, 'kenyot nyot', 'milosusu.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2024-11-11 11:30:15'),
-(3, 'mau susu dong', 6, 'gygygyg', 'milosusu.jpg', 'fast moving', 2, '2024-10-31 00:00:00', '2024-11-08 08:11:48'),
-(4, 'kopi', 58, 'mengokop kopiii', 'kopi.JPG', 'fast moving', 1, '2024-11-12 00:00:00', '2024-11-13 12:03:23');
+(1, 'Lactogen', 14, 'lactogen dong', '1730263266_lactogen.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2024-12-09 14:48:14'),
+(2, 'Milo', 6, 'Milooo', 'milosusu.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2024-12-09 14:49:21'),
+(3, 'Milo 2', 6, 'gygygyg', 'milosusu.jpg', 'fast moving', 2, '2024-10-31 00:00:00', '2024-12-09 14:48:47'),
+(4, 'Kopi', 58, 'Kopi Hitam', 'kopi.JPG', 'fast moving', 1, '2024-11-12 00:00:00', '2024-12-11 13:24:58');
 
 -- --------------------------------------------------------
 
@@ -117,16 +117,23 @@ CREATE TABLE `users` (
   `last_name` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `created_at` date NOT NULL
+  `permission` varchar(900) DEFAULT NULL,
+  `created_at` date NOT NULL,
+  `role` enum('admin','staff','user') DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `created_at`) VALUES
-(1, 'akmal', 'anjay', 'akmalpassword', 'akmal@ims.com', '2024-10-22'),
-(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24');
+INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `permission`, `created_at`, `role`) VALUES
+(1, 'Admin', 'Akmal', '123456789', 'akmal@ims.com', 'Admin', '2024-10-22', 'admin'),
+(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', NULL, '2024-10-24', 'user'),
+(5, 'us', 'alif', 'usalif', 'usalif@ims.com', NULL, '2024-12-07', 'user'),
+(6, 'test', 'test', '12345', 'test@ims.com', 'null', '2024-12-08', 'admin'),
+(7, 'test', 'test', '12345', 'test@gmail.com', NULL, '2024-12-08', 'user'),
+(8, 'alif', 'testing', '1234', 'test@gmail.com', NULL, '2024-12-08', 'user'),
+(9, 'coba', 'coba', 'coba123', 'coba@ims.com', NULL, '2024-12-11', 'staff');
 
 --
 -- Indexes for dumped tables
@@ -179,7 +186,7 @@ ALTER TABLE `checkout`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables
