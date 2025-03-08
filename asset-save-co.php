@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 if (!isset($_SESSION['user'])) {
     header('location: login_pages.php');
@@ -14,7 +14,7 @@ try {
         $asset_ids = $_POST['asset_id'];
         $asset_names = $_POST['asset_name'];
         $quantities = $_POST['quantity'];
-        
+
         // Data tambahan
         $checkout_by = $_SESSION['user']['first_name'] . ' ' . $_SESSION['user']['last_name'];
         $checkout_at = date('Y-m-d H:i:s');

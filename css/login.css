@@ -262,6 +262,7 @@ div.userAddFormContainer{
   
   .button-container {
     text-align: left;
+    transition: margin-top 0.3s ease; /* Animasi pergeseran */
   }
   
   .button-container button {
@@ -900,7 +901,7 @@ h1.report_header{
     font-size: 13px;
     border: 1px solid #b3b3b3;
     border-radius: 12px;
-    width: 50px;
+    width: 80px;
     height: 20px;
     -webkit-border-radius: 12px;
     -moz-border-radius: 12px;
@@ -925,6 +926,60 @@ h1.report_header{
     -ms-transition: 0.3s;
     -o-transition: 0.3s;
 }
+
+/* Gaya untuk ikon informasi */
+.info-icon {
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+    border: 1px solid #007bff;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    text-align: center;
+    line-height: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.info-icon:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Gaya untuk popup */
+.popup {
+    position: absolute;
+    background: #fff;
+    color: #333;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    z-index: 1000;
+    white-space: nowrap;
+}
+
+
+
+.popup::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 6px;
+    border-color: transparent transparent #fff transparent;
+    top: -12px;
+    left: 10px;
+}
+
+
+
+
 
 @media (max-width: 768px) {
     body{

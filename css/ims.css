@@ -162,7 +162,10 @@ body::before {
     background-color: #2962ff;
     color: white;
     transition: 0.5s;
+   
 }
+
+
 
 /* Media Query untuk perangkat mobile */
 @media (max-width: 768px) {

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['message'] = "Failed to delete user.";
         $_SESSION['msg_type'] = "error";
     }
-    
+
     // Redirect kembali ke halaman sebelumnya
     header("Location: asset-view.php"); // Ganti dengan halaman yang sesuai
     exit();

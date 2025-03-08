@@ -49,7 +49,7 @@ if ($table_name === 'users') {
 
 // Tangani data untuk tabel assets (tetap sama seperti sebelumnya)
 if ($table_name === 'assets') {
-    $columns = ['asset_name', 'description', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
+    $columns = ['asset_number', 'asset_name', 'asset_info_detail', 'asset_condition', 'asset_status', 'location', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
     $db_arr = [];
 
     foreach ($columns as $column) {
@@ -62,7 +62,7 @@ if ($table_name === 'assets') {
         } elseif ($column === 'asset_type') {
             $value = $_POST[$column] ?? null;
         } elseif ($column === 'stock') {
-            $value = (int)($_POST[$column] ?? 1);
+            $value = (int) ($_POST[$column] ?? 1);
         } elseif ($column === 'img') {
             $target_dir = "uploads/products/";
             $file_data = $_FILES[$column] ?? null;

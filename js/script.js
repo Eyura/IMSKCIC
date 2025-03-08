@@ -137,3 +137,98 @@ let mainMenuIcon = mainNav.querySelector('i.iconArrow');
 
 // Call function to hide/show submenu
 showHideSubMenu(subMenu, mainMenuIcon);
+
+
+// icon role info
+let lastClickedIcon = null; // Variabel untuk melacak ikon terakhir yang diklik
+
+function togglePopup(event, message) {
+    const icon = event.target; // Ikon yang diklik
+    const existingPopup = document.querySelector('.popup');
+
+    // Jika ikon yang sama di-klik, hapus popup
+    if (existingPopup && lastClickedIcon === icon) {
+        existingPopup.remove();
+        lastClickedIcon = null; // Reset ikon terakhir
+        resetAddUserPosition(); // Kembalikan posisi Add User
+        return;
+    }
+
+    // Hapus popup lama (jika ada dan berasal dari ikon lain)
+    if (existingPopup) {
+        existingPopup.remove();
+    }
+
+    // Buat popup baru
+    const popup = document.createElement('div');
+    popup.className = 'popup show';
+    popup.textContent = message;
+
+
+
+    // Tambahkan popup ke body
+    document.body.appendChild(popup);
+
+    // Atur posisi popup berdasarkan posisi ikon
+    const iconRect = icon.getBoundingClientRect();
+    popup.style.left = `${iconRect.left}px`;
+    popup.style.top = `${iconRect.bottom + 9}px`;
+
+    // Perbarui ikon terakhir yang diklik
+    lastClickedIcon = icon;
+
+    // Tambahkan event listener untuk klik di luar popup
+    document.addEventListener('click', function handleOutsideClick(e) {
+        if (!popup.contains(e.target) && e.target !== icon) {
+            popup.remove();
+            lastClickedIcon = null; // Reset ikon terakhir
+            resetAddUserPosition(); // Kembalikan posisi Add User
+            document.removeEventListener('click', handleOutsideClick);
+        }
+    });
+
+    // Pindahkan "Add User" ke bawah
+    moveAddUserPosition();
+}
+
+// Fungsi untuk memindahkan posisi "Add User" ke bawah
+function moveAddUserPosition() {
+    const buttonContainer = document.querySelector('.button-container');
+    if (buttonContainer) {
+        const popupHeight = document.querySelector('.popup').offsetHeight + 10; // Tambahkan jarak ekstra
+        buttonContainer.style.marginTop = `${popupHeight}px`;
+    }
+}
+
+// Fungsi untuk mengembalikan posisi "Add User" kembali semula
+function resetAddUserPosition() {
+    const buttonContainer = document.querySelector('.button-container');
+    if (buttonContainer) {
+        buttonContainer.style.marginTop = ''; // Reset marginTop
+    }
+}
+
+//role
+function selectRole(element) {
+    const role = element.getAttribute('data-value'); // Ambil value role dari atribut data-value
+    const roleInput = document.getElementById('role');
+    roleInput.value = role; // Set nilai role pada input hidden
+    
+    // Mengubah gaya visual untuk menunjukkan pilihan aktif
+    document.querySelectorAll('.permission .row div').forEach((div) => {
+        div.classList.remove('active'); // Menghapus kelas aktif dari semua elemen
+    });
+    element.classList.add('active'); // Menambahkan kelas aktif pada elemen yang dipilih
+}
+
+// Menambahkan event listener untuk menampilkan dan menyembunyikan popup
+document.querySelectorAll('.info-icon').forEach((icon) => {
+    icon.addEventListener('click', function(event) {
+        event.stopPropagation(); // Menghindari klik ganda yang tidak perlu
+    });
+});
+
+
+
+
+
