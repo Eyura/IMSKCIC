@@ -55,9 +55,6 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                                         <th>Asset Type</th>
                                         <th>Asset Info</th>
                                         <th>Stock</th>
-                                        <th>Status</th>
-                                        <th>Condition</th>
-                                        <th>Location</th>
                                         <th>Created By</th>
                                         <th>Created At</th>
                                         <th>Updated At</th>
@@ -85,10 +82,6 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                                             <td><?= $asset['asset_type'] ?></td>
                                             <td><?= $asset['asset_info_detail'] ?></td>
                                             <td class="stock"><?= $asset['stock'] ?></td>
-
-                                            <td> <?= $asset['asset_status'] ?> </td>
-                                            <td> <?= $asset['asset_condition'] ?> </td>
-                                            <td><?= $asset['location'] ?></td>
                                             <td>
                                                 <?php
                                                 $stmt = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
