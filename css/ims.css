@@ -99,17 +99,26 @@ body::before {
 
 .input-box input {
     width: 100%;
-    padding: 8px 0; 
-    border: none; 
-    border-bottom: 2px solid #ddd; 
+    padding: 12px 16px; 
+    border: none;
+    border-radius: 8px;
+    background-color: #f0f0f0; /* warna abu muda */
     font-size: 14px;
+    color: #333;
     outline: none;
-    transition: border-color 0.3s;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 0 1px #ccc;
 }
 
 .input-box input:focus {
     border-color: #93040c;
 }
+
+.remember-me {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
 
 .options {
     display: flex;
@@ -153,8 +162,8 @@ body::before {
 }
 
 .btn-login:hover {
-    background-color: #fff;
-    color: #93040c;
+    background-color: #790a0a;
+    color: #ffffff;
     transition: 0.5s;
 }
 

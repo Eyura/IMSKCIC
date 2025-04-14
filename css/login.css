@@ -1,43 +1,37 @@
-/* DASHBOARD STYLE */
-html, body{
+html, body {
     margin: 0;
     padding: 0;
     width: 100%;
     font-family: "Rubik";
     height: 100vh;
+    overflow: hidden; /* Menyembunyikan scroll */
 }
 
-#dashboardMainContainer{
+#dashboardMainContainer {
     display: flex;
     flex-direction: row;
     margin: 0;
     padding: 0;
+    height: 100vh; /* Pastikan kontainer utama sesuai dengan tinggi layar */
 }
 
-li{
-    list-style:none;
-}
-
-
-/* SIDE BAR */
-div.dashboard_sidebar{
+div.dashboard_sidebar {
     width: 20%;
-    /* background: #93040c; */
     background: linear-gradient(to right, #93040c, #660000);
-    height: auto;
+    height: 100vh; /* Memastikan sidebar sesuai dengan tinggi layar */
     margin: 0;
     padding: 0;
     position: relative;
-    border-top-right-radius: 3px;  
+    border-top-right-radius: 3px;
     border-bottom-right-radius: 3px;
 }
 
-div.dashboard_content_container{
+div.dashboard_content_container {
     width: 80%;
     background-color: rgba(240, 240, 240, 0.6);
-    height: 100vh;
-
+    height: 100vh; /* Memastikan konten utama sesuai dengan tinggi layar */
 }
+
 
 h3.dashboard_logo{
     color: #faf9f7;

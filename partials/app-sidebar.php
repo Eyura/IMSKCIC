@@ -30,7 +30,7 @@ $role = $user['role'] ?? 'guest';
             <!-- Report -->
             <?php if ($role === 'admin' || $role === 'staff'): ?>
                 <li class="liMainMenu">
-                    <a href="./report.php"> <i class="fa fa-dashboard"></i> <span class="menuText"> Report </span> </a>
+                    <a href="./report.php"> <i class="fa fa-file-text"></i> <span class="menuText"> Report </span> </a>
                 </li>
             <?php endif; ?>
 

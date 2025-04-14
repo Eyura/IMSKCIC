@@ -61,8 +61,13 @@ if ($_POST) {
                         <div class="input-box">
                             <input type="password" name="password" placeholder="Password">
                         </div>
-
-
+                        
+                        <div class="remember-me">
+                            <label>
+                                <input type="checkbox" name="remember" id="remember">
+                                Remember me
+                            </label>
+                        </div>
 
                         <div class="buttons">
                             <button type="submit" class="btn-login">Login</button>
@@ -83,46 +88,67 @@ if ($_POST) {
     </div>
 
     <script>
-        const img = document.querySelector('.left-section img');
-        const body = document.getElementById('loginBody');
+    const img = document.querySelector('.left-section img');
+    const body = document.getElementById('loginBody');
 
-        img.onload = function () {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            canvas.width = img.width;
-            canvas.height = img.height;
+    img.onload = function () {
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-            // Gambarkan gambar pada canvas
-            ctx.drawImage(img, 0, 0, img.width, img.height);
+        // Gambarkan gambar pada canvas
+        ctx.drawImage(img, 0, 0, img.width, img.height);
 
-            // Ambil warna dari beberapa titik pada gambar
-            const color1 = getDominantColor(ctx, 0, 0, 10, 10); // Atas kiri
-            const color2 = getDominantColor(ctx, img.width - 10, img.height - 10, 10, 10); // Bawah kanan
+        // Ambil warna dari beberapa titik pada gambar
+        const color1 = getDominantColor(ctx, 0, 0, 10, 10); // Atas kiri
+        const color2 = getDominantColor(ctx, img.width - 10, img.height - 10, 10, 10); // Bawah kanan
 
-            // Terapkan gradasi warna pada background body
-            body.style.background = `linear-gradient(90deg, ${color1} 23%, ${color2} 80%)`;
-        };
+        // Terapkan gradasi warna pada background body
+        body.style.background = `linear-gradient(90deg, ${color1} 23%, ${color2} 80%)`;
+    };
 
-        function getDominantColor(ctx, x, y, width, height) {
-            const imageData = ctx.getImageData(x, y, width, height).data;
-            let r = 0, g = 0, b = 0, count = 0;
+    function getDominantColor(ctx, x, y, width, height) {
+        const imageData = ctx.getImageData(x, y, width, height).data;
+        let r = 0, g = 0, b = 0, count = 0;
 
-            for (let i = 0; i < imageData.length; i += 4) {
-                r += imageData[i];
-                g += imageData[i + 1];
-                b += imageData[i + 2];
-                count++;
-            }
-
-            // Hitung rata-rata warna
-            r = Math.floor(r / count);
-            g = Math.floor(g / count);
-            b = Math.floor(b / count);
-
-            return `rgb(${r}, ${g}, ${b})`;
+        for (let i = 0; i < imageData.length; i += 4) {
+            r += imageData[i];
+            g += imageData[i + 1];
+            b += imageData[i + 2];
+            count++;
         }
 
-    </script>
+        r = Math.floor(r / count);
+        g = Math.floor(g / count);
+        b = Math.floor(b / count);
+
+        return `rgb(${r}, ${g}, ${b})`;
+    }
+
+    // ===== SCRIPT REMEMBER ME =====
+    document.addEventListener("DOMContentLoaded", function () {
+        const usernameInput = document.getElementById("usernameInput");
+        const rememberCheckbox = document.getElementById("rememberCheckbox");
+
+        // Cek apakah username pernah disimpan
+        const savedUsername = localStorage.getItem("rememberedUsername");
+        if (savedUsername) {
+            usernameInput.value = savedUsername;
+            rememberCheckbox.checked = true;
+        }
+
+        // Saat form dikirim
+        document.querySelector("form").addEventListener("submit", function () {
+            if (rememberCheckbox.checked) {
+                localStorage.setItem("rememberedUsername", usernameInput.value);
+            } else {
+                localStorage.removeItem("rememberedUsername");
+            }
+        });
+    });
+</script>
+
 
 </body>
 
