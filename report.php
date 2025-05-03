@@ -47,8 +47,8 @@ $user = $_SESSION['user'];
                         <div class="reportBox">
                             <h1 class="report_header">Export Checkout</h1>
                             <div class="alignRight">
-                                <a href="report_csv.php?report=checkout" class="reportExportBtnExc">Excel</a>
-                                <a href="report_pdf.php?report=checkout" class="reportExportBtnPDF">PDF</a>
+                                <a href="report_csv_asset_co.php?report=checkout" class="reportExportBtnExc">Excel</a>
+                                <a href="report_pdf_asset_co.php?report=checkout" class="reportExportBtnPDF">PDF</a>
                             </div>
                         </div>
                     </div>

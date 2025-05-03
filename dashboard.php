@@ -9,6 +9,18 @@ include('status_graph.php'); // File untuk data grafik batang
 include('status_graph_co.php'); // File untuk data Checkout
 include('connection.php'); // Koneksi ke database
 
+// Pagination untuk status graph
+$page_bar = isset($_GET['page_bar']) ? (int)$_GET['page_bar'] : 1; // Halaman untuk Bar Chart
+$page_line = isset($_GET['page_line']) ? (int)$_GET['page_line'] : 1; // Halaman untuk Line Chart
+
+// Batas jumlah data per halaman untuk masing-masing grafik
+$limit_bar = 4;  // Limit untuk Bar Chart
+$limit_line = 1; // Limit untuk Line Chart (satu tahun per halaman)
+
+// Offset untuk pagination
+$offset_bar = ($page_bar - 1) * $limit_bar; // Offset untuk Bar Chart
+$offset_line = ($page_line - 1) * $limit_line; // Offset untuk Line Chart
+
 // Mengambil jumlah total assets dari database
 try {
     $stmt = $conn->prepare("SELECT COUNT(*) as total FROM assets");
@@ -17,8 +29,24 @@ try {
     $totalAssets = $result['total'];
 } catch (PDOException $e) {
     echo "Terjadi kesalahan: " . $e->getMessage();
-    $totalAssets = 0; // Set default jika terjadi error
+    $totalAssets = 0;
 }
+
+// Menghitung total halaman untuk pagination untuk setiap grafik
+$totalPagesBar = ceil($totalAssets / $limit_bar); // Total halaman untuk pagination Bar Chart
+// Menghitung jumlah total data checkout (jumlah tahun yang unik)
+try {
+    $stmt = $conn->prepare("SELECT COUNT(DISTINCT YEAR(checkout_at)) as total_years FROM checkout");
+    $stmt->execute();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $totalYears = $result['total_years']; // Jumlah tahun yang ada di data checkout
+} catch (PDOException $e) {
+    echo "Terjadi kesalahan: " . $e->getMessage();
+    $totalYears = 0;
+}
+
+// Menghitung total halaman untuk pagination Line Chart berdasarkan jumlah tahun
+$totalPagesLine = ceil($totalYears / $limit_line); // Total halaman untuk pagination Line Chart
 
 // Mengambil data checkout per bulan dan tahun dari tabel checkout
 try {
@@ -26,13 +54,13 @@ try {
                             FROM checkout 
                             GROUP BY checkout_year, checkout_month
                             ORDER BY checkout_year, checkout_month");
-
     $stmt->execute();
     $checkout_data = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $checkout_json = json_encode($checkout_data);
 } catch (PDOException $e) {
     echo "Terjadi kesalahan: " . $e->getMessage();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -60,21 +88,40 @@ try {
             <div class="dashboard_content">
                 <div class="dashboard_content_main">
 
-
-
                     <!-- Chart Container with Flexbox -->
                     <div class="chart-container">
                         <!-- Bar Chart -->
                         <div class="chart-box">
                             <h1 class="section_header">Assets Stock</h1>
                             <canvas id="myChart"></canvas>
+                            <!-- Pagination Controls -->
+                            <div class="pagination_controls">
+                                <?php if ($page_bar > 1): ?>
+                                    <a href="?page_bar=<?= $page_bar - 1 ?>" class="pagination_button">Previous</a>
+                                <?php endif; ?>
+                                <span class="pagination_button active"><?= $page_bar ?></span>
+                                <?php if ($page_bar < $totalPagesBar): ?>
+                                    <a href="?page_bar=<?= $page_bar + 1 ?>" class="pagination_button">Next</a>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                         <!-- Line Chart -->
                         <div class="chart-box">
                             <h1 class="section_header">Checkout Assets Per Month</h1>
                             <canvas id="checkoutLineChart"></canvas>
+                            <!-- Pagination Controls -->
+                            <div class="pagination_controls">
+                                <?php if ($page_line > 1): ?>
+                                    <a href="?page_line=<?= $page_line - 1 ?>" class="pagination_button">Previous</a>
+                                <?php endif; ?>
+                                <span class="pagination_button active"><?= $page_line ?></span>
+                                <?php if ($page_line < $totalPagesLine): ?>
+                                    <a href="?page_line=<?= $page_line + 1 ?>" class="pagination_button">Next</a>
+                                <?php endif; ?>
+                            </div>
                         </div>
+
                     </div>
 
                 </div>
@@ -84,182 +131,139 @@ try {
 
     <script src="js/script.js?v=<?php echo time(); ?>"></script>
     <script>
-        // Grafik Batang (Data dari status_graph.php)
-        fetch('status_graph.php?json=1')
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.map(item => item.colAssets);
-                const values = data.map(item => item.colStocks);
+    // Grafik Batang (Data dari status_graph.php)
+    fetch('status_graph.php?json=1&page=<?= $page_bar ?>&limit=<?= $limit_bar ?>')
+        .then(response => response.json())
+        .then(data => {
+            const labels = data.map(item => item.colAssets);
+            const values = data.map(item => item.colStocks);
 
-                const backgroundColors = [
-                    'rgba(255, 99, 132, 0.8)',
-                    'rgba(54, 162, 235, 0.8)',
-                    'rgba(255, 206, 86, 0.8)',
-                    'rgba(75, 192, 192, 0.8)',
-                    'rgba(153, 102, 255, 0.8)',
-                    'rgba(255, 159, 64, 0.8)'
-                ];
+               // Warna untuk data ganjil dan genap
+        const adjustedBackgroundColors = labels.map((_, i) =>
+        i % 2 === 0 ? 'rgba(205, 188, 185)' : 'rgba(102, 0, 0)'
+    );
 
-                const adjustedBackgroundColors = labels.map((_, i) => backgroundColors[i % backgroundColors.length]);
-
-                const ctx = document.getElementById('myChart').getContext('2d');
-                new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: [{
-                            label: '',
-                            data: values,
-                            backgroundColor: adjustedBackgroundColors,
-                            borderWidth: 1,
-                            borderRadius: 20
-                        }]
-                    },
-                    options: {
-                        responsive: true,
-                        scales: {
-                            x: { grid: { display: false } },
-                            y: { beginAtZero: true, grid: { borderDash: [5, 5], color: '#ddd' }, ticks: { stepSize: 2 } }
-                        },
-                        plugins: {
-                            legend: { display: false },  // Hide the legend completely for bar chart
-                            tooltip: { enabled: true, backgroundColor: 'rgba(0,0,0,0.7)', bodyFont: { size: 14 } }
-                        }
-                    }
-                });
-            })
-            .catch(error => console.error('Error fetching bar chart data:', error));
-
-        // Grafik Garis (Data Checkout per Bulan)
-        const checkoutData = <?php echo $checkout_json; ?>;  // Data Checkout dari PHP
-
-        // Menyiapkan data labels dan data total checkout
-        const monthNames = [
-            'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-            'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-        ];
-
-        // Menyusun data berdasarkan tahun
-        const dataByYear = {};
-
-        checkoutData.forEach(item => {
-            const month = item.checkout_month - 1;  // PHP menggunakan 1-12 untuk bulan, JavaScript menggunakan 0-11
-            const yearMonth = `${monthNames[month]}`;
-
-            // Kelompokkan data berdasarkan tahun
-            if (!dataByYear[item.checkout_year]) {
-                dataByYear[item.checkout_year] = [];
-            }
-            dataByYear[item.checkout_year].push({
-                month: yearMonth,
-                total_checkout: item.total_checkout
-            });
-        });
-
-        // Menyiapkan warna berbeda untuk tiap tahun
-        const yearColors = {
-            '2021': 'rgba(75, 192, 192, 1)',  // Warna untuk tahun 2020
-            '2022': 'rgba(54, 162, 235, 1)',  // Warna untuk tahun 2021
-            '2023': 'rgba(255, 99, 132, 1)',  // Warna untuk tahun 2022
-            '2024': 'rgba(153, 102, 255, 1)',  // Warna untuk tahun 2023
-            // Tambahkan lebih banyak tahun dan warna jika diperlukan
-        };
-
-        // Menyiapkan label bulan/tahun
-        const labels = [''];
-        Object.keys(dataByYear).forEach(year => {
-            dataByYear[year].forEach(item => {
-                if (!labels.includes(item.month)) {
-                    labels.push(item.month);
-                }
-            });
-        });
-
-        // Menyiapkan data untuk tiap tahun
-        const datasets = [];
-        Object.keys(dataByYear).forEach(year => {
-            const dataPoints = [0];  // Menambahkan data kosong pada awal untuk setiap tahun
-            labels.slice(1).forEach(month => {  // Mulai dari indeks 1 untuk menghindari label kosong
-                const foundItem = dataByYear[year].find(item => item.month === month);
-                dataPoints.push(foundItem ? foundItem.total_checkout : 0);
-            });
-
-            datasets.push({
-                label: `${year}`,
-                data: dataPoints,
-                backgroundColor: yearColors[year] ? `${yearColors[year]}` : 'rgba(0, 0, 0, 0.1)',
-                borderColor: yearColors[year] || 'rgba(0, 0, 0, 1)',
-                borderWidth: 2,
-                fill: false,  // Jangan mengisi area bawah garis
-                pointRadius: 5,
-                pointBackgroundColor: yearColors[year] || 'rgba(0, 0, 0, 1)',
-                pointBorderColor: '#fff',
-                pointBorderWidth: 2,
-                lineTension: 0.4,
-                // Shadow Effect
-                shadowOffsetX: 3,  // Offset bayangan di sumbu X
-                shadowOffsetY: 3,  // Offset bayangan di sumbu Y
-                shadowBlur: 10,  // Jumlah blur bayangan
-                shadowColor: 'rgba(0, 0, 0, 0.3)'  // Warna bayangan
-            });
-        });
-
-        // Grafik Garis (Line Chart)
-        const ctxLine = document.getElementById('checkoutLineChart').getContext('2d');
-        new Chart(ctxLine, {
-            type: 'line',
-            data: {
-                labels: labels,  // Menampilkan label bulan/tahun
-                datasets: datasets  // Data untuk setiap tahun
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    x: {
-                        grid: {
-                            display: false  // Menyembunyikan garis grid pada sumbu X
-                        },
-                        ticks: {
-                            padding: 10,  // Menambahkan padding pada sumbu X untuk memberi jarak lebih dari sumbu Y
-                            autoSkip: false // Jangan otomatis melewati label
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,  // Mulai dari 0 pada sumbu Y
-                        grid: {
-                            color: '#ddd',  // Warna garis grid sumbu Y
-                            borderDash: [5, 5]  // Garis grid dengan pola garis putus-putus
-                        },
-                        ticks: {
-                            stepSize: 2,  // Ukuran langkah pada sumbu Y
-                            font: {
-                                size: 12  // Ukuran font pada label sumbu Y
-                            }
-                        }
-                    }
+            const ctx = document.getElementById('myChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: '',
+                        data: values,
+                        backgroundColor: adjustedBackgroundColors,
+                        borderWidth: 1,
+                        borderRadius: 20
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        display: true,  // Menampilkan legend untuk setiap tahun
-                        labels: {
-                            font: {
-                                size: 14
-                            }
-                        }
+                options: {
+                    responsive: true,
+                    scales: {
+                        x: { grid: { display: false } },
+                        y: { beginAtZero: true, grid: { borderDash: [5, 5], color: '#ddd' }, ticks: { stepSize: 2 } }
                     },
-                    tooltip: {
-                        enabled: true,
-                        backgroundColor: 'rgba(0,0,0,0.7)',  // Warna tooltip
-                        bodyFont: {
-                            size: 14  // Ukuran font pada tooltip
-                        }
+                    plugins: {
+                        legend: { display: false }, 
+                        tooltip: { enabled: true, backgroundColor: 'rgba(0,0,0,0.7)', bodyFont: { size: 14 } }
                     }
                 }
+            });
+        })
+        .catch(error => console.error('Error fetching bar chart data:', error));
+
+       // Fungsi untuk menghasilkan warna random dalam format RGBA
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256);  // Random red
+    const g = Math.floor(Math.random() * 256);  // Random green
+    const b = Math.floor(Math.random() * 256);  // Random blue
+    const a = 1; // Opacity penuh
+    return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
+// Grafik Garis (Data Checkout per Bulan)
+const checkoutData = <?php echo $checkout_json; ?>;  // Data Checkout dari PHP
+
+// Menyiapkan data labels dan data total checkout
+const monthNames = [
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+];
+
+// Menyusun data berdasarkan tahun
+const dataByYear = {};
+
+checkoutData.forEach(item => {
+    const month = item.checkout_month - 1;  // PHP menggunakan 1-12 untuk bulan, JavaScript menggunakan 0-11
+    const yearMonth = `${monthNames[month]}`;
+
+    // Kelompokkan data berdasarkan tahun
+    if (!dataByYear[item.checkout_year]) {
+        dataByYear[item.checkout_year] = [];
+    }
+    dataByYear[item.checkout_year].push({
+        month: yearMonth,
+        total_checkout: item.total_checkout
+    });
+});
+
+// Menyaring data berdasarkan halaman (tahun)
+const years = Object.keys(dataByYear).sort((a, b) => b - a);  // Mendapatkan semua tahun dari data
+const currentYear = years[<?= $page_line - 1 ?>];  // Menentukan tahun yang relevan untuk halaman ini
+
+const filteredData = dataByYear[currentYear];
+
+// Menyiapkan label bulan/tahun (pastikan semua bulan ada, bahkan yang tidak ada data)
+const labels = monthNames; // Menampilkan semua bulan dari Jan hingga Dec
+const checkoutPerMonth = monthNames.map(month => {
+    // Mencari data untuk bulan tertentu, jika tidak ada, set ke 0
+    const monthData = filteredData.find(item => item.month === month);
+    return monthData ? monthData.total_checkout : 0;
+});
+
+// Menghasilkan warna acak untuk tahun saat ini
+const color = getRandomColor(); // Warna yang akan digunakan untuk garis dan titik
+
+// Menyiapkan data untuk grafik garis
+const datasets = [{
+    label: `${currentYear}`,
+    data: checkoutPerMonth,
+    backgroundColor: color,  // Warna latar belakang titik
+    borderColor: color,  // Warna garis
+    borderWidth: 2,
+    fill: false, 
+    pointRadius: 5,
+    pointBackgroundColor: color,  // Warna titik
+    pointBorderColor: '#fff',
+    pointBorderWidth: 2,
+    lineTension: 0.4
+}];
+
+// Membuat grafik garis dengan Chart.js
+const ctx = document.getElementById('checkoutLineChart').getContext('2d');
+new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: labels,
+        datasets: datasets
+    },
+    options: {
+        responsive: true,
+        scales: {
+            x: { grid: { display: false }, ticks: { font: { size: 12 }, color: '#555' } },
+            y: {
+                beginAtZero: true,
+                grid: { borderDash: [5, 5], color: '#ddd' },
+                ticks: { font: { size: 14 }, color: '#555' }
             }
-        });
+        },
+        plugins: {
+            legend: { position: 'top', labels: { font: { size: 14 }, color: '#333' } },
+            tooltip: { enabled: true, backgroundColor: 'rgba(0,0,0,0.7)', bodyFont: { size: 14 } }
+        }
+    }
+});
 
     </script>
-
 </body>
 
 </html>

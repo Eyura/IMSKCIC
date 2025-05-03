@@ -3,9 +3,33 @@ session_start();
 if (!isset($_SESSION['user'])) {
     header('location: login_pages.php');
 }
+
 $_SESSION['table'] = 'users';
 $user = $_SESSION['user'];
 $users = include('show-users.php');
+
+try {
+    // Pagination logic
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman saat ini
+    $limit = 10; // Jumlah data per halaman
+    $offset = ($page - 1) * $limit;
+
+    // Hitung total data
+    $stmt_total = $conn->prepare("SELECT COUNT(*) as total FROM users");
+    $stmt_total->execute();
+    $total_data = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+
+    $total_pages = ceil($total_data / $limit); // Total halaman
+
+    // Ambil data sesuai limit dan offset
+    $stmt = $conn->prepare("SELECT * FROM users ORDER BY created_at ASC LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -76,8 +100,9 @@ $users = include('show-users.php');
                                     <?php } ?>
                                 </tbody>
                             </table>
-                            <p class="userCount"><?= count($users) ?> users</p>
+                            <p class="userCount"><?= $total_data ?> users</p>
 
+                            
                             <?php
                             if (isset($_SESSION['message'])): ?>
                                 <div class="responseMessage <?= $_SESSION['msg_type'] ?>">
@@ -88,7 +113,23 @@ $users = include('show-users.php');
                                     ?>
                                 </div>
                             <?php endif; ?>
+                            
                         </div>
+                        <!-- Navigasi Pagination -->
+                        <div class="pagination_controls">
+    <?php if ($page > 1): ?>
+        <a href="?page=<?= $page - 1 ?>" class="pagination_button">Previous</a>
+    <?php endif; ?>
+
+    <?php
+    // Menampilkan halaman aktif saja
+    echo '<a href="?page=' . $page . '" class="pagination_button active">' . $page . '</a>';
+    ?>
+
+    <?php if ($page < $total_pages): ?>
+        <a href="?page=<?= $page + 1 ?>" class="pagination_button">Next</a>
+    <?php endif; ?>
+</div>    
                     </div>
                 </div>
             </div>

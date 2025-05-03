@@ -88,34 +88,43 @@ include('connection.php');
     </div>
 
     <script>
-        // Kode JavaScript yang telah Anda buat untuk menambahkan row dan menghapus row tetap sama.
-        var assetOptions = <?= $asset_options_json ?>; // JSON data asset
+    var assetOptions = <?= $asset_options_json ?>; // JSON data asset
 
-        function updateAssetName(row) {
-            var selectElement = document.getElementById("asset_name_" + row);
-            var selectedIndex = selectElement.selectedIndex;
-            var selectedOption = selectElement.options[selectedIndex];
+    // Fungsi untuk memperbarui nama asset di row
+    function updateAssetName(row) {
+        var selectElement = document.getElementById("asset_name_" + row);
+        var selectedIndex = selectElement.selectedIndex;
+        var selectedOption = selectElement.options[selectedIndex];
 
-            document.getElementById("hidden_asset_name_" + row).value = selectedOption.text;
+        document.getElementById("hidden_asset_name_" + row).value = selectedOption.text;
+    }
+
+    // Menyimpan jumlah klik
+    let clickCount = 0;
+    const addNewBtn = document.getElementById('addNewBtn');
+
+    // Fungsi untuk menangani klik tombol "Add New"
+    addNewBtn.addEventListener('click', function () {
+        // Jika sudah mencapai  klik, tampilkan alert dan nonaktifkan tombol
+        if (clickCount >= 4) {
+            // Nonaktifkan tombol setelah 5 kali klik
+            addNewBtn.disabled = true;
+
+            // Menampilkan alert dan menghentikan penambahan item
+            alert('Hanya dapat melakukan 5 checkout secara bersamaan.');
+            return; // Menghentikan proses penambahan item
         }
 
-        function script() {
-            this.initialize = function () {
-                this.registerEvents();
-            },
+        // Increment jumlah klik
+        clickCount++;
 
-                this.registerEvents = function () {
-                    document.getElementById('addNewBtn').addEventListener('click', this.addNewAssetRow.bind(this));
-                    document.getElementById('checkoutList').addEventListener('click', this.removeAssetRow); // Event listener untuk menghapus
-                },
+        // Proses untuk menambahkan item jika belum mencapai batas klik
+        var rowCount = document.querySelectorAll('.checkoutList .form-row').length + 1;
 
-                this.addNewAssetRow = function () {
-                    var rowCount = document.querySelectorAll('.checkoutList .column').length + 1;
-
-                    var newRow = document.createElement('div');
-                    newRow.className = 'form-row';
-                    newRow.innerHTML =
-                        `<div class="form-group">
+        var newRow = document.createElement('div');
+        newRow.className = 'form-row';
+        newRow.innerHTML =
+            `<div class="form-group">
                 <label for="asset_name_${rowCount}">Asset Name</label>
                 <select id="asset_name_${rowCount}" name="asset_id[]" required class="appFormInput" onchange="updateAssetName(${rowCount})">
                     <option value="">Select Asset</option>
@@ -133,20 +142,19 @@ include('connection.php');
                 </div>
             </div>`;
 
-                    document.getElementById('checkoutList').appendChild(newRow);
-                },
+        // Menambahkan baris baru ke dalam daftar
+        document.getElementById('checkoutList').appendChild(newRow);
+    });
 
-                this.removeAssetRow = function (event) {
-                    if (event.target.classList.contains('button-delete') || event.target.closest('.button-delete')) {
-                        var row = event.target.closest('.form-row');
-                        row.remove();
-                    }
-                }
+    // Fungsi untuk menghapus asset row
+    document.getElementById('checkoutList').addEventListener('click', function (event) {
+        if (event.target.classList.contains('button-delete') || event.target.closest('.button-delete')) {
+            var row = event.target.closest('.form-row');
+            row.remove();
         }
+    });
+</script>
 
-        const myScript = new script();
-        myScript.initialize();
-    </script>
 
     <?php include('partials/app-scripts.php'); ?>
 </body>

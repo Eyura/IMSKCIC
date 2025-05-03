@@ -32,11 +32,11 @@ $users = include('show-users.php');
                         <h1 class="section_header"><i class="fa fa-plus"></i> Add Asset</h1>
 
                         <form action="add.php" method="POST" class="appForm" enctype="multipart/form-data">
-                            <div>
+                            <!-- <div>
                                 <label for="asset_number">Asset Number</label>
                                 <input type="text" id="asset_number" name="asset_number" required
                                     class="appFormInput" />
-                            </div>
+                            </div> -->
                             <div>
                                 <label for="asset_name">Asset Name</label>
                                 <input type="text" id="asset_name" name="asset_name" required class="appFormInput" />
@@ -59,18 +59,7 @@ $users = include('show-users.php');
                                 <input type="number" id="stock" name="stock" value="1" min="1" required
                                     class="appFormInput" />
                             </div>
-                            <div>
-                                <label for="asset_status">Asset Status</label>
-                                <textarea id="asset_status" name="asset_status" class="appFormInput"></textarea>
-                            </div>
-                            <div>
-                                <label for="asset_condition">Asset Condition</label>
-                                <textarea id="asset_condition" name="asset_condition" class="appFormInput"></textarea>
-                            </div>
-                            <div>
-                                <label for="location">Asset Location</label>
-                                <textarea id="location" name="location" class="appFormInput"></textarea>
-                            </div>
+                            
                             <div>
                                 <label for="img">Product Image</label>
                                 <input type="file" id="img" name="img" required class="appFormInput" />

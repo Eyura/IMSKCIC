@@ -27,13 +27,11 @@ try {
 
     // Handle form submission to update asset
     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['update_asset'])) {
-        $asset_number = $_POST['asset_number'];
+        
         $asset_name = $_POST['asset_name'];
         $asset_type = $_POST['asset_type'];
         $asset_info_detail = $_POST['assetInfo'];
-        $asset_status = $_POST['assetStatus'];
-        $asset_condition = $_POST['assetCondition'];
-        $asset_location = $_POST['assetLoc'];
+       
 
         // Get quantities to add and remove
         $quantity_to_add = isset($_POST['quantity_add']) ? intval($_POST['quantity_add']) : 0;
@@ -86,26 +84,22 @@ try {
 
         // Update asset in the database
         $query = "UPDATE assets 
-                  SET asset_number = ?, 
+                  SET 
                       asset_name = ?, 
                       asset_type = ?, 
                       asset_info_detail = ?, 
-                      asset_status = ?, 
-                      asset_condition = ?, 
-                      location = ?, 
+                     
                       stock = ?, 
                       img = ?, 
                       updated_at = NOW() 
                   WHERE id = ?";
         $stmt = $conn->prepare($query);
         $stmt->execute([
-            $asset_number,
+            
             $asset_name,
             $asset_type,
             $asset_info_detail,
-            $asset_status,
-            $asset_condition,
-            $asset_location,
+            
             $new_stock,
             $img_name,
             $asset_id
