@@ -13,6 +13,29 @@ $message = isset($_SESSION['message']) ? $_SESSION['message'] : '';
 $msg_type = isset($_SESSION['msg_type']) ? $_SESSION['msg_type'] : '';
 unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after display
 
+// Pagination logic
+try {
+    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Halaman saat ini
+    $limit = 5; // Jumlah data per halaman
+    $offset = ($page - 1) * $limit;
+
+    // Hitung total data
+    $stmt_total = $conn->prepare("SELECT COUNT(*) as total FROM assets");
+    $stmt_total->execute();
+    $total_data = $stmt_total->fetch(PDO::FETCH_ASSOC)['total'];
+
+    $total_pages = ceil($total_data / $limit); // Total halaman
+
+    // Ambil data sesuai limit dan offset
+    $stmt = $conn->prepare("SELECT * FROM assets ORDER BY asset_type && id ASC LIMIT :limit OFFSET :offset");
+    $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->execute();
+    $paged_assets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    echo "Error: " . $e->getMessage();
+}
+
 
 ?>
 
@@ -71,50 +94,63 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($assets as $asset) {
+    <?php foreach ($paged_assets as $asset) { ?>
+        <tr>
+            <td><?= $asset['id'] ?></td>
+            <td><?= $asset['asset_name'] ?></td>
+            <td><img class="productImg" src="uploads/products/<?= $asset['img'] ?>" alt=""></td>
+            <td><?= $asset['asset_type'] ?></td>
+            <td><?= $asset['asset_info_detail'] ?></td>
+            <td class="stock"><?= $asset['stock'] ?></td>
+            <td>
+                <?php
+                $stmt = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
+                $stmt->execute([$asset['created_by']]);
+                $creator = $stmt->fetch(PDO::FETCH_ASSOC);
+                echo $creator ? $creator['first_name'] . ' ' . $creator['last_name'] : 'Unknown';
+                ?>
+            </td>
+            <td><?= date('M d, Y', strtotime($asset['created_at'])) ?></td>
+            <td><?= date('M d, Y H:i:s', strtotime($asset['updated_at'])) ?></td>
+            <td>
+                <?php if ($user_role == 'admin') { ?>
+                    <button type="button" class="edit-button"
+                        onclick="openEditModal(<?= htmlspecialchars(json_encode($asset)) ?>)">
+                        <i class="fa fa-edit"></i> Edit
+                    </button>
+                <?php } ?>
+            </td>
+            <td>
+                <?php if ($user_role == 'admin') { ?>
+                    <form action="asset-delete.php" method="POST"
+                        onsubmit="return confirm('Are you sure to delete <?= $asset['asset_name'] ?>?');">
+                        <input type="hidden" name="asset_id" value="<?= $asset['id'] ?>">
+                        <button type="submit" class="delete-button"><i class="fa fa-trash"></i>
+                            Delete</button>
+                    </form>
+                <?php } ?>
+            </td>
+        </tr>
+    <?php } ?>
+</tbody>
 
-                                        ?>
-                                        <tr>
-                                            <td><?= $asset['id'] ?></td>
-                                            <td><?= $asset['asset_name'] ?></td>
-                                            <td><img class="productImg" src="uploads/products/<?= $asset['img'] ?>" alt="">
-                                            </td>
-                                            <td><?= $asset['asset_type'] ?></td>
-                                            <td><?= $asset['asset_info_detail'] ?></td>
-                                            <td class="stock"><?= $asset['stock'] ?></td>
-                                            <td>
-                                                <?php
-                                                $stmt = $conn->prepare("SELECT first_name, last_name FROM users WHERE id = ?");
-                                                $stmt->execute([$asset['created_by']]);
-                                                $creator = $stmt->fetch(PDO::FETCH_ASSOC);
-                                                echo $creator ? $creator['first_name'] . ' ' . $creator['last_name'] : 'Unknown';
-                                                ?>
-                                            </td>
-                                            <td><?= date('M d, Y', strtotime($asset['created_at'])) ?></td>
-                                            <td><?= date('M d, Y H:i:s', strtotime($asset['updated_at'])) ?></td>
-                                            <td>
-                                                <?php if ($user_role == 'admin') { ?>
-                                                    <button type="button" class="edit-button"
-                                                        onclick="openEditModal(<?= htmlspecialchars(json_encode($asset)) ?>)">
-                                                        <i class="fa fa-edit"></i> Edit
-                                                    </button>
-                                                <?php } ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($user_role == 'admin') { ?>
-                                                    <form action="asset-delete.php" method="POST"
-                                                        onsubmit="return confirm('Are you sure to delete <?= $asset['asset_name'] ?>?');">
-                                                        <input type="hidden" name="asset_id" value="<?= $asset['id'] ?>">
-                                                        <button type="submit" class="delete-button"><i class="fa fa-trash"></i>
-                                                            Delete</button>
-                                                    </form>
-                                                <?php } ?>
-                                            </td>
-                                        </tr>
-                                    <?php } ?>
-
-                                </tbody>
+                                
                             </table>
+                            <!-- Navigasi Pagination -->
+                            <div class="pagination_controls">
+        <?php if ($page > 1): ?>
+            <a href="?page=<?= $page - 1 ?>" class="pagination_button">Previous</a>
+        <?php endif; ?>
+    
+        <?php
+        // Menampilkan halaman aktif saja
+        echo '<a href="?page=' . $page . '" class="pagination_button active">' . $page . '</a>';
+        ?>
+    
+        <?php if ($page < $total_pages): ?>
+            <a href="?page=<?= $page + 1 ?>" class="pagination_button">Next</a>
+        <?php endif; ?>
+    </div> 
                             <p class="userCount"><?= count($assets) ?> assets</p>
                         </div>
                     </div>
@@ -131,10 +167,7 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
             <form id="editAssetForm" action="asset-edit.php" method="POST" enctype="multipart/form-data">
                 <input type="hidden" name="asset_id" id="editAssetId">
 
-                <div>
-                    <label for="editAssetNumber">Asset Number</label>
-                    <input type="text" id="editAssetNumber" name="asset_number" required class="appFormInput" />
-                </div>
+                
 
                 <div>
                     <label for="editAssetName">Asset Name</label>
@@ -165,20 +198,7 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
                     <textarea id="editAssetInfo" name="assetInfo" required class="appFormInput"></textarea>
                 </div>
 
-                <div>
-                    <label for="editAssetStatus">Status</label>
-                    <textarea id="editAssetStatus" name="assetStatus" required class="appFormInput"></textarea>
-                </div>
-
-                <div>
-                    <label for="editAssetCondition">Condition</label>
-                    <textarea id="editAssetCondition" name="assetCondition" required class="appFormInput"></textarea>
-                </div>
-
-                <div>
-                    <label for="editAssetLoc">Location</label>
-                    <textarea id="editAssetLoc" name="assetLoc" required class="appFormInput"></textarea>
-                </div>
+               
 
                 <div>
                     <label for="editAssetImage">Current Image</label>
@@ -196,14 +216,11 @@ unset($_SESSION['message'], $_SESSION['msg_type']); // Clear message after displ
     <script>
         // Open and populate Edit Modal
         function openEditModal(asset) {
-            document.getElementById('editAssetNumber').value = asset.asset_number;
+            
             document.getElementById('editAssetId').value = asset.id;
             document.getElementById('editAssetName').value = asset.asset_name;
             document.getElementById('editAssetType').value = asset.asset_type;
             document.getElementById('editAssetInfo').value = asset.asset_info_detail;
-            document.getElementById('editAssetStatus').value = asset.asset_status;
-            document.getElementById('editAssetCondition').value = asset.asset_condition;
-            document.getElementById('editAssetLoc').value = asset.location;
             document.getElementById('editAssetImage').src = 'uploads/products/' + asset.img;
 
             document.getElementById('editAssetModal').style.display = 'flex';

@@ -49,7 +49,7 @@ if ($table_name === 'users') {
 
 // Tangani data untuk tabel assets (tetap sama seperti sebelumnya)
 if ($table_name === 'assets') {
-    $columns = ['asset_number', 'asset_name', 'asset_info_detail', 'asset_condition', 'asset_status', 'location', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
+    $columns = [ 'asset_name', 'asset_info_detail', 'asset_type', 'stock', 'img', 'created_by', 'created_at', 'updated_at'];
     $db_arr = [];
 
     foreach ($columns as $column) {
