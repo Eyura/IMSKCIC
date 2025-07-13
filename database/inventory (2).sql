@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jun 16, 2025 at 01:50 PM
+-- Generation Time: Jul 10, 2025 at 04:36 AM
 -- Server version: 8.4.3
 -- PHP Version: 8.3.16
 
@@ -24,12 +24,41 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `activity_history`
+--
+
+CREATE TABLE `activity_history` (
+  `id` int NOT NULL,
+  `asset_id` int DEFAULT NULL,
+  `history_asset_name` varchar(255) NOT NULL,
+  `history_asset_location` varchar(255) DEFAULT NULL,
+  `user_id` int NOT NULL,
+  `change_type` varchar(50) NOT NULL,
+  `quantity_change` int NOT NULL,
+  `stock_before` int NOT NULL,
+  `stock_after` int NOT NULL,
+  `notes` varchar(255) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `activity_history`
+--
+
+INSERT INTO `activity_history` (`id`, `asset_id`, `history_asset_name`, `history_asset_location`, `user_id`, `change_type`, `quantity_change`, `stock_before`, `stock_after`, `notes`, `created_at`) VALUES
+(12, NULL, 'celengan ', 'Karawang', 1, 'initial_stock', 190, 0, 190, 'Initial stock on asset creation', '2025-07-10 03:57:39'),
+(13, NULL, 'celengan ', 'Karawang', 1, 'asset_deleted', -190, 190, 0, 'Asset \'celengan \' was permanently deleted.', '2025-07-10 04:16:29');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `assets`
 --
 
 CREATE TABLE `assets` (
   `id` int NOT NULL,
   `asset_name` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `asset_location` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `stock` int NOT NULL,
   `asset_info_detail` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `img` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
@@ -43,15 +72,16 @@ CREATE TABLE `assets` (
 -- Dumping data for table `assets`
 --
 
-INSERT INTO `assets` (`id`, `asset_name`, `stock`, `asset_info_detail`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
-(1, 'PC', 10, 'PC office', '1747281961_cpu.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2025-05-15 11:10:44'),
-(2, 'Kabel UTP', 27, 'jumlah = meter', '1747282018_lan.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2025-05-15 11:12:44'),
-(3, 'Mouse', 10, 'Mouse office', '1747282052_mouse.jpg', 'slow moving', 2, '2024-10-31 00:00:00', '2025-05-15 11:11:25'),
-(4, 'Roll Ticket', 43, 'Roll ticket TVM dan loket', '1747282085_roll tiket.jpg', 'fast moving', 1, '2024-11-12 00:00:00', '2025-05-15 11:11:08'),
-(5, 'Keyboard', 10, 'Keyboard office', '1747281898_keyboard.jpg', 'slow moving', 1, '2025-01-13 00:00:00', '2025-05-15 11:13:09'),
-(6, 'Dinamo', 10, 'Dinamo mesin tiket', '1747282127_dinamo.jpg', 'slow moving', 1, '2025-04-22 00:00:00', '2025-05-15 11:10:52'),
-(7, 'Monitor', 20, 'monitor PIDS', '1747281934_monitor.jpg', 'slow moving', 1, '2025-05-03 00:00:00', '2025-05-15 11:21:11'),
-(8, 'Thermal Paste', 2, 'Thermal paste CPU', 'thermal paste.jpg', 'slow moving', 1, '2025-05-15 00:00:00', '2025-05-15 00:00:00');
+INSERT INTO `assets` (`id`, `asset_name`, `asset_location`, `stock`, `asset_info_detail`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'PC', 'Halim', 31, 'PC office', '1747281961_cpu.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2025-07-10 10:55:41'),
+(2, 'Kabel UTP', 'Padalarang', 22, 'jumlah = meter', '1747282018_lan.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2025-07-09 16:44:23'),
+(3, 'Mouse', 'Halim', 30, 'Mouse office', '1747282052_mouse.jpg', 'slow moving', 2, '2024-10-31 00:00:00', '2025-07-09 16:45:35'),
+(4, 'Roll Ticket', 'Karawang', 43, 'Roll ticket TVM dan loket', '1747282085_roll tiket.jpg', 'fast moving', 1, '2024-11-12 00:00:00', '2025-07-08 12:06:10'),
+(5, 'Keyboard', 'Karawang', 15, '213123\r\n', '1747281898_keyboard.jpg', 'slow moving', 1, '2025-01-13 00:00:00', '2025-07-09 13:50:03'),
+(6, 'Dinamo', 'Karawang', 10, 'Dinamo mesin tiket', '1747282127_dinamo.jpg', 'slow moving', 1, '2025-04-22 00:00:00', '2025-07-08 12:06:25'),
+(7, 'Monitor', 'Tegalluar', 20, 'monitor PIDS', '1747281934_monitor.jpg', 'slow moving', 1, '2025-05-03 00:00:00', '2025-07-08 12:06:35'),
+(8, 'Thermal Paste', 'Padalarang', 1, 'Thermal paste CPU', 'thermal paste.jpg', 'slow moving', 1, '2025-05-15 00:00:00', '2025-07-08 12:06:45'),
+(9, 'jogja', 'Halim', 1, 'sdasda', '1751958293_Screenshot (1).png', 'fast moving', 1, '2025-07-08 07:04:53', '2025-07-08 07:04:53');
 
 -- --------------------------------------------------------
 
@@ -62,7 +92,7 @@ INSERT INTO `assets` (`id`, `asset_name`, `stock`, `asset_info_detail`, `img`, `
 CREATE TABLE `checkout` (
   `id` int NOT NULL,
   `asset_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
-  `quantity_received` int NOT NULL,
+  `asset_location` varchar(30) COLLATE utf8mb4_general_ci NOT NULL,
   `quantity_ordered` int NOT NULL,
   `quantity_remaining` int NOT NULL,
   `checkout_by` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
@@ -73,30 +103,33 @@ CREATE TABLE `checkout` (
 -- Dumping data for table `checkout`
 --
 
-INSERT INTO `checkout` (`id`, `asset_name`, `quantity_received`, `quantity_ordered`, `quantity_remaining`, `checkout_by`, `checkout_at`) VALUES
-(31, 'PC', 1, 1, 7, 'staff 1', '2024-01-02 08:41:35'),
-(37, 'Mouse', 4, 4, 15, 'staff 2', '2024-01-04 11:33:10'),
-(38, 'Roll Ticket', 4, 4, 6, 'staff 2', '2024-02-08 14:14:21'),
-(39, 'Monitor', 10, 10, 14, 'staff 2', '2024-03-05 09:24:00'),
-(40, 'Keyboard', 5, 5, 6, 'staff 1', '2024-04-08 09:44:37'),
-(41, 'Kabel UTP', 1, 1, 13, 'staff 1', '2024-04-16 11:14:02'),
-(42, 'Roll Ticket', 10, 10, 3, 'staff 1', '2024-05-13 11:15:39'),
-(43, 'Monitor', 1, 1, 14, 'staff 2', '2024-06-04 11:17:05'),
-(44, 'Dinamo', 3, 3, 0, 'staff 1', '2024-07-16 11:17:51'),
-(45, 'Kabel UTP', 5, 5, 25, 'staff 1', '2024-08-16 11:46:51'),
-(46, 'PC', 2, 2, 23, 'staff 2', '2024-09-09 11:47:41'),
-(47, 'Mouse', 4, 4, 19, 'staff 2', '2024-11-13 11:49:25'),
-(48, 'Monitor', 7, 7, 12, 'staff 1', '2024-11-13 11:49:30'),
-(49, 'Dinamo', 7, 7, 5, 'staff 2', '2024-11-13 11:49:34'),
-(50, 'Roll Ticket', 5, 5, 0, 'staff 1', '2024-12-17 11:52:13'),
-(51, 'Roll Ticket', 5, 5, 95, 'staff 1', '2023-01-04 12:03:37'),
-(52, 'Roll Ticket', 10, 10, 85, 'staff 1', '2023-02-09 12:03:42'),
-(53, 'Kabel UTP', 15, 15, 70, 'staff 1', '2023-03-08 12:03:46'),
-(54, 'Roll Ticket', 12, 12, 58, 'staff 2', '2024-11-18 08:42:22'),
-(55, 'Roll Ticket', 8, 8, 2, 'staff 1', '2025-04-17 17:25:02'),
-(56, 'Dinamo', 11, 11, 10, 'staff 2', '2025-04-26 11:31:03'),
-(57, 'Keyboard', 37, 37, 93, 'staff 2', '2025-05-03 09:50:55'),
-(58, 'Thermal Paste', 1, 1, 1, 'staff 2', '2025-05-03 10:27:52');
+INSERT INTO `checkout` (`id`, `asset_name`, `asset_location`, `quantity_ordered`, `quantity_remaining`, `checkout_by`, `checkout_at`) VALUES
+(31, 'PC', '', 1, 7, 'staff 1', '2024-01-02 08:41:35'),
+(37, 'Mouse', '', 4, 15, 'staff 2', '2024-01-04 11:33:10'),
+(38, 'Roll Ticket', '', 4, 6, 'staff 2', '2024-02-08 14:14:21'),
+(39, 'Monitor', '', 10, 14, 'staff 2', '2024-03-05 09:24:00'),
+(40, 'Keyboard', '', 5, 6, 'staff 1', '2024-04-08 09:44:37'),
+(41, 'Kabel UTP', '', 1, 13, 'staff 1', '2024-04-16 11:14:02'),
+(42, 'Roll Ticket', '', 10, 3, 'staff 1', '2024-05-13 11:15:39'),
+(43, 'Monitor', '', 1, 14, 'staff 2', '2024-06-04 11:17:05'),
+(44, 'Dinamo', '', 3, 0, 'staff 1', '2024-07-16 11:17:51'),
+(45, 'Kabel UTP', '', 5, 25, 'staff 1', '2024-08-16 11:46:51'),
+(46, 'PC', '', 2, 23, 'staff 2', '2024-09-09 11:47:41'),
+(47, 'Mouse', '', 4, 19, 'staff 2', '2024-11-13 11:49:25'),
+(48, 'Monitor', '', 7, 12, 'staff 1', '2024-11-13 11:49:30'),
+(49, 'Dinamo', '', 7, 5, 'staff 2', '2024-11-13 11:49:34'),
+(50, 'Roll Ticket', '', 5, 0, 'staff 1', '2024-12-17 11:52:13'),
+(51, 'Roll Ticket', '', 5, 95, 'staff 1', '2023-01-04 12:03:37'),
+(52, 'Roll Ticket', '', 10, 85, 'staff 1', '2023-02-09 12:03:42'),
+(53, 'Kabel UTP', '', 15, 70, 'staff 1', '2023-03-08 12:03:46'),
+(54, 'Roll Ticket', '', 12, 58, 'staff 2', '2024-11-18 08:42:22'),
+(55, 'Roll Ticket', '', 8, 2, 'staff 1', '2025-04-17 17:25:02'),
+(56, 'Dinamo', '', 11, 10, 'staff 2', '2025-04-26 11:31:03'),
+(57, 'Keyboard', '', 37, 93, 'staff 2', '2025-05-03 09:50:55'),
+(58, 'Thermal Paste', '', 1, 1, 'staff 2', '2025-05-03 10:27:52'),
+(59, 'PC', 'Halim', 1, 8, 'Admin Akmal', '2025-07-09 14:18:50'),
+(60, 'Kabel UTP', 'Padalarang', 1, 26, 'Admin Akmal', '2025-07-09 14:20:58'),
+(61, 'Thermal Paste', 'Padalarang', 1, 1, 'Admin Akmal', '2025-07-10 10:19:35');
 
 -- --------------------------------------------------------
 
@@ -147,6 +180,13 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `crea
 --
 
 --
+-- Indexes for table `activity_history`
+--
+ALTER TABLE `activity_history`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `asset_id` (`asset_id`);
+
+--
 -- Indexes for table `assets`
 --
 ALTER TABLE `assets`
@@ -178,16 +218,22 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `activity_history`
+--
+ALTER TABLE `activity_history`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+
+--
 -- AUTO_INCREMENT for table `assets`
 --
 ALTER TABLE `assets`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -198,6 +244,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `activity_history`
+--
+ALTER TABLE `activity_history`
+  ADD CONSTRAINT `activity_history_ibfk_1` FOREIGN KEY (`asset_id`) REFERENCES `assets` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `assets`

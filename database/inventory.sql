@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Mar 08, 2025 at 06:41 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost:3306
+-- Generation Time: Jun 16, 2025 at 01:50 PM
+-- Server version: 8.4.3
+-- PHP Version: 8.3.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -28,32 +28,30 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `assets` (
-  `id` int(11) NOT NULL,
-  `asset_number` varchar(20) NOT NULL,
-  `asset_name` varchar(200) NOT NULL,
-  `stock` int(255) NOT NULL,
-  `asset_price` int(255) NOT NULL,
-  `asset_status` varchar(100) NOT NULL,
-  `asset_condition` varchar(100) NOT NULL,
-  `asset_info_detail` varchar(200) DEFAULT NULL,
-  `img` varchar(100) DEFAULT NULL,
-  `asset_type` varchar(15) NOT NULL,
-  `created_by` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
-  `updated_at` datetime NOT NULL,
-  `location` varchar(100) NOT NULL
+  `id` int NOT NULL,
+  `asset_name` varchar(200) COLLATE utf8mb4_general_ci NOT NULL,
+  `stock` int NOT NULL,
+  `asset_info_detail` varchar(200) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `img` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `asset_type` varchar(15) COLLATE utf8mb4_general_ci NOT NULL,
+  `created_by` int NOT NULL,
+  `created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `assets`
 --
 
-INSERT INTO `assets` (`id`, `asset_number`, `asset_name`, `stock`, `asset_price`, `asset_status`, `asset_condition`, `asset_info_detail`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`, `location`) VALUES
-(1, 'TEMP-1c', 'Lactogenn', 10, 0, 'we', 'w3ef', 'ewfsw', '1737444061_lactogen.jpg', 'fast moving', 1, '2024-10-28 00:00:00', '2025-01-22 15:42:02', 'erf'),
-(2, 'TEMP-2', 'Milo', 6, 0, '', '', 'Milooo', 'milosusu.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2024-12-09 14:49:21', ''),
-(3, 'TEMP-3', 'Milo 2', 6, 0, '', '', 'gygygyg', 'milosusu.jpg', 'fast moving', 2, '2024-10-31 00:00:00', '2024-12-09 14:48:47', ''),
-(4, 'TEMP-4', 'Kopi', 58, 0, '', '', 'Kopi Hitam', 'kopi.JPG', 'fast moving', 1, '2024-11-12 00:00:00', '2024-12-11 13:24:58', ''),
-(5, 'dwdwd', 'Keyboard', 130, 0, '', '', NULL, 'IT pc.png', 'slow moving', 1, '2025-01-13 00:00:00', '2025-01-22 15:21:30', '');
+INSERT INTO `assets` (`id`, `asset_name`, `stock`, `asset_info_detail`, `img`, `asset_type`, `created_by`, `created_at`, `updated_at`) VALUES
+(1, 'PC', 10, 'PC office', '1747281961_cpu.jpg', 'slow moving', 1, '2024-10-28 00:00:00', '2025-05-15 11:10:44'),
+(2, 'Kabel UTP', 27, 'jumlah = meter', '1747282018_lan.jpg', 'slow moving', 2, '2024-10-30 00:00:00', '2025-05-15 11:12:44'),
+(3, 'Mouse', 10, 'Mouse office', '1747282052_mouse.jpg', 'slow moving', 2, '2024-10-31 00:00:00', '2025-05-15 11:11:25'),
+(4, 'Roll Ticket', 43, 'Roll ticket TVM dan loket', '1747282085_roll tiket.jpg', 'fast moving', 1, '2024-11-12 00:00:00', '2025-05-15 11:11:08'),
+(5, 'Keyboard', 10, 'Keyboard office', '1747281898_keyboard.jpg', 'slow moving', 1, '2025-01-13 00:00:00', '2025-05-15 11:13:09'),
+(6, 'Dinamo', 10, 'Dinamo mesin tiket', '1747282127_dinamo.jpg', 'slow moving', 1, '2025-04-22 00:00:00', '2025-05-15 11:10:52'),
+(7, 'Monitor', 20, 'monitor PIDS', '1747281934_monitor.jpg', 'slow moving', 1, '2025-05-03 00:00:00', '2025-05-15 11:21:11'),
+(8, 'Thermal Paste', 2, 'Thermal paste CPU', 'thermal paste.jpg', 'slow moving', 1, '2025-05-15 00:00:00', '2025-05-15 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -62,12 +60,12 @@ INSERT INTO `assets` (`id`, `asset_number`, `asset_name`, `stock`, `asset_price`
 --
 
 CREATE TABLE `checkout` (
-  `id` int(11) NOT NULL,
-  `asset_name` varchar(100) NOT NULL,
-  `quantity_received` int(11) NOT NULL,
-  `quantity_ordered` int(11) NOT NULL,
-  `quantity_remaining` int(11) NOT NULL,
-  `checkout_by` varchar(100) NOT NULL,
+  `id` int NOT NULL,
+  `asset_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `quantity_received` int NOT NULL,
+  `quantity_ordered` int NOT NULL,
+  `quantity_remaining` int NOT NULL,
+  `checkout_by` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
   `checkout_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -76,25 +74,29 @@ CREATE TABLE `checkout` (
 --
 
 INSERT INTO `checkout` (`id`, `asset_name`, `quantity_received`, `quantity_ordered`, `quantity_remaining`, `checkout_by`, `checkout_at`) VALUES
-(31, 'milomu', 1, 1, 7, 'akmal anjay', '2024-01-02 08:41:35'),
-(37, 'susu om ohh', 4, 4, 15, 'akmal anjay', '2024-01-04 11:33:10'),
-(38, 'milomu', 4, 4, 6, 'akmal anjay', '2024-02-08 14:14:21'),
-(39, 'kopi', 10, 10, 14, 'akmal anjay', '2024-03-05 09:24:00'),
-(40, 'mau susu dong', 5, 5, 6, 'akmal anjay', '2024-04-08 09:44:37'),
-(41, 'kopi', 1, 1, 13, 'akmal anjay', '2024-04-16 11:14:02'),
-(42, 'kopi', 10, 10, 3, 'akmal anjay', '2024-05-13 11:15:39'),
-(43, 'susu om ohh', 1, 1, 14, 'akmal anjay', '2024-06-04 11:17:05'),
-(44, 'kopi', 3, 3, 0, 'akmal anjay', '2024-07-16 11:17:51'),
-(45, 'kopi', 5, 5, 25, 'akmal anjay', '2024-08-16 11:46:51'),
-(46, 'kopi', 2, 2, 23, 'akmal anjay', '2024-09-09 11:47:41'),
-(47, 'kopi', 4, 4, 19, 'akmal anjay', '2024-11-13 11:49:25'),
-(48, 'kopi', 7, 7, 12, 'akmal anjay', '2024-11-13 11:49:30'),
-(49, 'kopi', 7, 7, 5, 'akmal anjay', '2024-11-13 11:49:34'),
-(50, 'kopi', 5, 5, 0, 'akmal anjay', '2024-12-17 11:52:13'),
-(51, 'kopi', 5, 5, 95, 'akmal anjay', '2023-01-04 12:03:37'),
-(52, 'kopi', 10, 10, 85, 'akmal anjay', '2023-02-09 12:03:42'),
-(53, 'kopi', 15, 15, 70, 'akmal anjay', '2023-03-08 12:03:46'),
-(54, 'kopi', 12, 12, 58, 'akmal anjay', '2024-11-18 08:42:22');
+(31, 'PC', 1, 1, 7, 'staff 1', '2024-01-02 08:41:35'),
+(37, 'Mouse', 4, 4, 15, 'staff 2', '2024-01-04 11:33:10'),
+(38, 'Roll Ticket', 4, 4, 6, 'staff 2', '2024-02-08 14:14:21'),
+(39, 'Monitor', 10, 10, 14, 'staff 2', '2024-03-05 09:24:00'),
+(40, 'Keyboard', 5, 5, 6, 'staff 1', '2024-04-08 09:44:37'),
+(41, 'Kabel UTP', 1, 1, 13, 'staff 1', '2024-04-16 11:14:02'),
+(42, 'Roll Ticket', 10, 10, 3, 'staff 1', '2024-05-13 11:15:39'),
+(43, 'Monitor', 1, 1, 14, 'staff 2', '2024-06-04 11:17:05'),
+(44, 'Dinamo', 3, 3, 0, 'staff 1', '2024-07-16 11:17:51'),
+(45, 'Kabel UTP', 5, 5, 25, 'staff 1', '2024-08-16 11:46:51'),
+(46, 'PC', 2, 2, 23, 'staff 2', '2024-09-09 11:47:41'),
+(47, 'Mouse', 4, 4, 19, 'staff 2', '2024-11-13 11:49:25'),
+(48, 'Monitor', 7, 7, 12, 'staff 1', '2024-11-13 11:49:30'),
+(49, 'Dinamo', 7, 7, 5, 'staff 2', '2024-11-13 11:49:34'),
+(50, 'Roll Ticket', 5, 5, 0, 'staff 1', '2024-12-17 11:52:13'),
+(51, 'Roll Ticket', 5, 5, 95, 'staff 1', '2023-01-04 12:03:37'),
+(52, 'Roll Ticket', 10, 10, 85, 'staff 1', '2023-02-09 12:03:42'),
+(53, 'Kabel UTP', 15, 15, 70, 'staff 1', '2023-03-08 12:03:46'),
+(54, 'Roll Ticket', 12, 12, 58, 'staff 2', '2024-11-18 08:42:22'),
+(55, 'Roll Ticket', 8, 8, 2, 'staff 1', '2025-04-17 17:25:02'),
+(56, 'Dinamo', 11, 11, 10, 'staff 2', '2025-04-26 11:31:03'),
+(57, 'Keyboard', 37, 37, 93, 'staff 2', '2025-05-03 09:50:55'),
+(58, 'Thermal Paste', 1, 1, 1, 'staff 2', '2025-05-03 10:27:52');
 
 -- --------------------------------------------------------
 
@@ -103,10 +105,10 @@ INSERT INTO `checkout` (`id`, `asset_name`, `quantity_received`, `quantity_order
 --
 
 CREATE TABLE `stocks` (
-  `id` int(11) NOT NULL,
-  `asset_id` int(11) NOT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
+  `id` int NOT NULL,
+  `asset_id` int NOT NULL,
+  `created_by` int DEFAULT NULL,
+  `quantity` int DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -118,13 +120,13 @@ CREATE TABLE `stocks` (
 --
 
 CREATE TABLE `users` (
-  `id` int(11) NOT NULL,
-  `first_name` varchar(50) NOT NULL,
-  `last_name` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
-  `email` varchar(50) NOT NULL,
+  `id` int NOT NULL,
+  `first_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
   `created_at` date NOT NULL,
-  `role` enum('admin','staff','user') DEFAULT 'user'
+  `role` enum('admin','staff','user') COLLATE utf8mb4_general_ci DEFAULT 'user'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -133,10 +135,12 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `created_at`, `role`) VALUES
 (1, 'Admin', 'Akmal', '123456789', 'akmal@ims.com', '2024-10-22', 'admin'),
-(2, 'Fatah', 'Test', 'qwertyui', 'fatah@ims.com', '2024-10-24', 'user'),
-(3, 'alif', 'testing', '1234', 'test@gmail.com', '2024-12-08', 'user'),
-(4, 'staff', '1', '123', 'staff1@ims.com', '2025-01-13', 'staff'),
-(5, 'staff', '12', '123', 'staff122@ims.com', '2025-01-13', 'staff');
+(2, 'Admin', 'Fatah', 'qwertyui', 'fatah@ims.com', '2024-10-24', 'admin'),
+(3, 'user', '1', '1234', 'user1@ims.com', '2024-12-08', 'user'),
+(4, 'Admin', 'Egi', '123', 'egi@ims.com', '2025-01-13', 'admin'),
+(5, 'staff', '1', '123', 'staff1@ims.com', '2025-01-13', 'staff'),
+(6, 'staff', '2', '123', 'staff2@ims.com', '2025-04-18', 'staff'),
+(7, 'user', '2', '123', 'user2@ims.com', '2025-05-11', 'user');
 
 --
 -- Indexes for dumped tables
@@ -147,7 +151,6 @@ INSERT INTO `users` (`id`, `first_name`, `last_name`, `password`, `email`, `crea
 --
 ALTER TABLE `assets`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `asset_number` (`asset_number`),
   ADD KEY `fk_user` (`created_by`);
 
 --
@@ -178,19 +181,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `assets`
 --
 ALTER TABLE `assets`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `checkout`
 --
 ALTER TABLE `checkout`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Constraints for dumped tables
